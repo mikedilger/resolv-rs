@@ -171,6 +171,7 @@ impl Response {
     }
 }
 
+/// An iterator to iterate through DNS records
 pub struct RecordItems<'a, T: RecordData> {
     msg: &'a mut Message,
     section: Section,

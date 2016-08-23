@@ -9,8 +9,8 @@ use std::ffi::CStr;
 
 #[derive(Debug, Clone)]
 pub struct MX {
-    preference: i16,
-    exchange: String,
+    pub preference: i16,
+    pub exchange: String,
 }
 
 impl RecordData for MX {

@@ -6,7 +6,7 @@ use ::libresolv_sys::__ns_msg as Message;
 
 #[derive(Debug, Clone)]
 pub struct TXT {
-    dname: String,
+    pub dname: String,
 }
 
 impl RecordData for TXT {

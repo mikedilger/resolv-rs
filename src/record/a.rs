@@ -9,7 +9,7 @@ use std::mem;
 
 #[derive(Debug, Clone)]
 pub struct A {
-    address: Ipv4Addr,
+    pub address: Ipv4Addr,
 }
 
 impl RecordData for A {

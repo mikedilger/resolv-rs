@@ -9,7 +9,7 @@ use std::ffi::CStr;
 
 #[derive(Debug, Clone)]
 pub struct PTR {
-    dname: String,
+    pub dname: String,
 }
 
 impl RecordData for PTR {

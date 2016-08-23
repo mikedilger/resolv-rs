@@ -19,10 +19,10 @@ pub trait RecordData: Sized {
 /// A DNS response record of a particular type
 #[derive(Debug, Clone)]
 pub struct Record<T: RecordData> {
-    name: String,
-    class: Class,
-    ttl: u32,
-    data: T
+    pub name: String,
+    pub class: Class,
+    pub ttl: u32,
+    pub data: T
 }
 
 impl<T: RecordData> Record<T> {

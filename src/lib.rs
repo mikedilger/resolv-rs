@@ -45,7 +45,7 @@ pub mod error;
 use error::{Error, ResolutionError};
 
 mod response;
-pub use response::{Response, Section, Flags};
+pub use response::{Response, Section, Flags, RecordItems};
 
 pub mod record;
 pub use record::{Record, RecordType, Class};
