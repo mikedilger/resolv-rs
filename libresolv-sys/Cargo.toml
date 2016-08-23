@@ -1,0 +1,16 @@
+[package]
+name = "libresolv-sys"
+version = "0.1.0"
+authors = ["Mike Dilger <mike@optcomp.nz>"]
+links = "resolv"
+build = "build.rs"
+license = "MIT/Apache-2.0"
+repository = "https://github.com/mikedilger/resolv-rs"
+description = "Native bindings to the libresolv library"
+
+[lib]
+name = "libresolv_sys"
+path = "lib.rs"
+
+[dependencies]
+libc = "0.2"
