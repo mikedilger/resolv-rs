@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `resolv` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, resolv">
+
+    <title>resolv - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'resolv', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>resolv</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-0' class='srclink' href='../src/resolv/src/lib.rs.html#1-243' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>This library consists of a high-level interface to Gnu libc&#39;s (glibc) <code>libresolv</code> DNS
+resolver.  It allows you to look up DNS resource records of any type (e.g. A, AAAA, MX, TXT,
+etc), use recursion (if your system&#39;s DNS resolver permits it), and perform the DNS search
+algorithm to complete incomplete names, all via your operating system (glibc, not the kernel).</p>
+
+<p>The lower level library, libresolv-sys, was generated from glibc version 2.23 on linux,
+using the newer thread-safe function calls.  It may not work on older version of glibc, or
+on other operating systems.  Pull-requests which improve portability are appreciated.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class='rust rust-example-rendered'>
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>resolv</span>;
+
+<span class='kw'>use</span> <span class='ident'>resolv</span>::{<span class='ident'>Resolver</span>, <span class='ident'>Class</span>, <span class='ident'>RecordType</span>, <span class='ident'>Section</span>, <span class='ident'>Record</span>};
+<span class='kw'>use</span> <span class='ident'>resolv</span>::<span class='ident'>record</span>::<span class='ident'>MX</span>;
+
+<span class='kw'>fn</span> <span class='ident'>main</span>() {
+    <span class='comment'>// You must create a mutable resolver object to hold the context.</span>
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>resolver</span> <span class='op'>=</span> <span class='ident'>Resolver</span>::<span class='ident'>new</span>().<span class='ident'>unwrap</span>();
+
+    <span class='comment'>// .query() and .search() are the main interfaces to the resolver.</span>
+    <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>response</span> <span class='op'>=</span> <span class='ident'>resolver</span>.<span class='ident'>query</span>(<span class='string'>b&quot;gmail.com&quot;</span>, <span class='ident'>Class</span>::<span class='ident'>IN</span>,
+                                      <span class='ident'>RecordType</span>::<span class='ident'>MX</span>).<span class='ident'>unwrap</span>();
+
+    <span class='comment'>// .get_section_count() returns the number of records in that</span>
+    <span class='comment'>// section of the response.  There are four sections, but we</span>
+    <span class='comment'>// usually care about `Section::Answer`</span>
+    <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>response</span>.<span class='ident'>get_section_count</span>(<span class='ident'>Section</span>::<span class='ident'>Answer</span>) {
+
+        <span class='comment'>// As records are strongly typed, you must know what you are</span>
+        <span class='comment'>// looking for.  If you assign into the wrong type, a run-time</span>
+        <span class='comment'>// error `WrongRRType` will be returned.</span>
+        <span class='kw'>let</span> <span class='ident'>mx</span>: <span class='ident'>Record</span><span class='op'>&lt;</span><span class='ident'>MX</span><span class='op'>&gt;</span> <span class='op'>=</span> <span class='ident'>response</span>.<span class='ident'>get_record</span>(<span class='ident'>Section</span>::<span class='ident'>Answer</span>, <span class='ident'>i</span>)
+                             .<span class='ident'>unwrap</span>();
+
+       <span class='macro'>println</span><span class='macro'>!</span>(<span class='string'>&quot;{:?}&quot;</span>, <span class='ident'>mx</span>);
+    }
+}</pre>
+</div><h2 id='reexports' class='section-header'><a href="#reexports">Reexports</a></h2>
+<table><tr><td><code>pub use record::{<a class='struct' href='../resolv/record/struct.Record.html' title='resolv::record::Record'>Record</a>, <a class='enum' href='../resolv/record/enum.RecordType.html' title='resolv::record::RecordType'>RecordType</a>};</code></td></tr></table><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='error/index.html'
+                                  title='resolv::error'>error</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='record/index.html'
+                                  title='resolv::record'>record</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Flags.html'
+                                  title='resolv::Flags'>Flags</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Resolver.html'
+                                  title='resolv::Resolver'>Resolver</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Response.html'
+                                  title='resolv::Response'>Response</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Class.html'
+                                  title='resolv::Class'>Class</a></td>
+                           <td class='docblock short'>
+                                <p>DNS Class.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.ResolverOption.html'
+                                  title='resolv::ResolverOption'>ResolverOption</a></td>
+                           <td class='docblock short'>
+                                <p>Options for the Resolver</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='enum' href='enum.Section.html'
+                                  title='resolv::Section'>Section</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "resolv";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

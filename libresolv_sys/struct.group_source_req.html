@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `group_source_req` struct in crate `libresolv_sys`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, group_source_req">
+
+    <title>libresolv_sys::group_source_req - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>libresolv_sys</a></p><script>window.sidebarCurrent = {name: 'group_source_req', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>libresolv_sys</a>::<wbr><a class='struct' href=''>group_source_req</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-2232' class='srclink' href='../src/libresolv_sys/libresolv-sys/lib.rs.html#1766-1770' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct group_source_req {
+    pub gsr_interface: <a class='type' href='../libresolv_sys/type.uint32_t.html' title='libresolv_sys::uint32_t'>uint32_t</a>,
+    pub gsr_group: <a class='struct' href='../libresolv_sys/struct.sockaddr_storage.html' title='libresolv_sys::sockaddr_storage'>sockaddr_storage</a>,
+    pub gsr_source: <a class='struct' href='../libresolv_sys/struct.sockaddr_storage.html' title='libresolv_sys::sockaddr_storage'>sockaddr_storage</a>,
+}</pre><h2 class='fields'>Fields</h2><span id='structfield.gsr_interface' class='structfield'><code>gsr_interface: <a class='type' href='../libresolv_sys/type.uint32_t.html' title='libresolv_sys::uint32_t'>uint32_t</a></code>
+                           </span><span class='stab '></span><span id='structfield.gsr_group' class='structfield'><code>gsr_group: <a class='struct' href='../libresolv_sys/struct.sockaddr_storage.html' title='libresolv_sys::sockaddr_storage'>sockaddr_storage</a></code>
+                           </span><span class='stab '></span><span id='structfield.gsr_source' class='structfield'><code>gsr_source: <a class='struct' href='../libresolv_sys/struct.sockaddr_storage.html' title='libresolv_sys::sockaddr_storage'>sockaddr_storage</a></code>
+                           </span><span class='stab '></span><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='struct' href='../libresolv_sys/struct.group_source_req.html' title='libresolv_sys::group_source_req'>group_source_req</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2231' class='srclink' href='../src/libresolv_sys/libresolv-sys/lib.rs.html#1765' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='struct' href='../libresolv_sys/struct.group_source_req.html' title='libresolv_sys::group_source_req'>group_source_req</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2236' class='srclink' href='../src/libresolv_sys/libresolv-sys/lib.rs.html#1771-1773' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; Self</code></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html' title='core::default::Default'>Default</a> for <a class='struct' href='../libresolv_sys/struct.group_source_req.html' title='libresolv_sys::group_source_req'>group_source_req</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-2239' class='srclink' href='../src/libresolv_sys/libresolv-sys/lib.rs.html#1774-1776' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.default' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></h4>
+<div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "libresolv_sys";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

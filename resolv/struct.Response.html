@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Response` struct in crate `resolv`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Response">
+
+    <title>resolv::Response - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>resolv</a></p><script>window.sidebarCurrent = {name: 'Response', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>resolv</a>::<wbr><a class='struct' href=''>Response</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-143' class='srclink' href='../src/resolv/src/response.rs.html#74-78' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Response {
+    // some fields omitted
+}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../resolv/struct.Response.html' title='resolv::Response'>Response</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-146' class='srclink' href='../src/resolv/src/response.rs.html#80-172' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(msg: <a class='struct' href='../libresolv_sys/struct.__ns_msg.html' title='libresolv_sys::__ns_msg'>Message</a>, buffer: <a class='struct' href='https://doc.rust-lang.org/nightly/alloc/boxed/struct.Box.html' title='alloc::boxed::Box'>Box</a>&lt;<a class='struct' href='https://doc.rust-lang.org/nightly/collections/vec/struct.Vec.html' title='collections::vec::Vec'>Vec</a>&lt;<a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a>&gt;&gt;) -&gt; <a class='struct' href='../resolv/struct.Response.html' title='resolv::Response'>Response</a></code></h4>
+<div class='docblock'><p>This is for internal use.</p>
+</div><h4 id='method.get_id' class='method'><code>fn <a href='#method.get_id' class='fnname'>get_id</a>(&amp;self) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u16.html'>u16</a></code></h4>
+<div class='docblock'><p>Gets the ID field of the Name Server response</p>
+</div><h4 id='method.get_flags' class='method'><code>fn <a href='#method.get_flags' class='fnname'>get_flags</a>(&amp;self) -&gt; <a class='struct' href='../resolv/struct.Flags.html' title='resolv::Flags'>Flags</a></code></h4>
+<div class='docblock'><p>Gets flags (and opcodes) in the header of the Name Server response</p>
+</div><h4 id='method.get_section_count' class='method'><code>fn <a href='#method.get_section_count' class='fnname'>get_section_count</a>(&amp;self, section: <a class='enum' href='../resolv/enum.Section.html' title='resolv::Section'>Section</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a></code></h4>
+<div class='docblock'><p>Returns a count of how many records exist in the given section</p>
+</div><h4 id='method.get_record' class='method'><code>fn <a href='#method.get_record' class='fnname'>get_record</a>&lt;T&gt;(&amp;mut self, section: <a class='enum' href='../resolv/enum.Section.html' title='resolv::Section'>Section</a>, index: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../resolv/record/struct.Record.html' title='resolv::record::Record'>Record</a>&lt;T&gt;,&nbsp;<a class='enum' href='../resolv/error/enum.Error.html' title='resolv::error::Error'>Error</a>&gt; <span class='where'>where T: <a class='trait' href='../resolv/record/trait.RecordData.html' title='resolv::record::RecordData'>RecordData</a></span></code></h4>
+<div class='docblock'><p>Gets a record from a section.  Returns an error if index is out of bounds
+(use get_section_count()).  Also returns an error (at run-time) if assigned into
+a Record of the wrong type.</p>
+</div><h4 id='method.questions' class='method'><code>fn <a href='#method.questions' class='fnname'>questions</a>&lt;T&gt;(&amp;mut self) -&gt; RecordItems&lt;T&gt; <span class='where'>where T: <a class='trait' href='../resolv/record/trait.RecordData.html' title='resolv::record::RecordData'>RecordData</a></span></code></h4>
+<h4 id='method.answers' class='method'><code>fn <a href='#method.answers' class='fnname'>answers</a>&lt;T&gt;(&amp;mut self) -&gt; RecordItems&lt;T&gt; <span class='where'>where T: <a class='trait' href='../resolv/record/trait.RecordData.html' title='resolv::record::RecordData'>RecordData</a></span></code></h4>
+<h4 id='method.authorities' class='method'><code>fn <a href='#method.authorities' class='fnname'>authorities</a>&lt;T&gt;(&amp;mut self) -&gt; RecordItems&lt;T&gt; <span class='where'>where T: <a class='trait' href='../resolv/record/trait.RecordData.html' title='resolv::record::RecordData'>RecordData</a></span></code></h4>
+<h4 id='method.additional_records' class='method'><code>fn <a href='#method.additional_records' class='fnname'>additional_records</a>&lt;T&gt;(&amp;mut self) -&gt; RecordItems&lt;T&gt; <span class='where'>where T: <a class='trait' href='../resolv/record/trait.RecordData.html' title='resolv::record::RecordData'>RecordData</a></span></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "resolv";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

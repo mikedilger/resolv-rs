@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ResolverOption` enum in crate `resolv`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ResolverOption">
+
+    <title>resolv::ResolverOption - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>resolv</a></p><script>window.sidebarCurrent = {name: 'ResolverOption', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='index.html'>resolv</a>::<wbr><a class='enum' href=''>ResolverOption</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-730' class='srclink' href='../src/resolv/src/lib.rs.html#64-117' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum ResolverOption {
+    Init,
+    Debug,
+    AAOnly,
+    UseVC,
+    Primary,
+    IgnTc,
+    Recurse,
+    DefNames,
+    StayOpen,
+    DNSrch,
+    Insecure1,
+    Insecure2,
+    NoAliases,
+    UseInet6,
+    Rotate,
+    NoCheckName,
+    KeepTSIG,
+    Blast,
+    UseBString,
+    NoIp6DotInt,
+    UseEDNS0,
+    SngLkup,
+    SngLkupReop,
+    UseDNSSEC,
+    NoTLDQuery,
+    Default,
+}</pre><div class='docblock'><p>Options for the Resolver</p>
+</div><h2 class='variants'>Variants</h2>
+<span id='variant.Init' class='variant'><code>Init</code></span><div class='docblock'><p>address initialized</p>
+</div><span id='variant.Debug' class='variant'><code>Debug</code></span><div class='docblock'><p>print debug messages</p>
+</div><span id='variant.AAOnly' class='variant'><code>AAOnly</code></span><div class='docblock'><p>authoritative answers only (!IMPL)</p>
+</div><span id='variant.UseVC' class='variant'><code>UseVC</code></span><div class='docblock'><p>use virtual circuit</p>
+</div><span id='variant.Primary' class='variant'><code>Primary</code></span><div class='docblock'><p>query primary server only (!IMPL)</p>
+</div><span id='variant.IgnTc' class='variant'><code>IgnTc</code></span><div class='docblock'><p>ignore truncation errors</p>
+</div><span id='variant.Recurse' class='variant'><code>Recurse</code></span><div class='docblock'><p>recursion desired</p>
+</div><span id='variant.DefNames' class='variant'><code>DefNames</code></span><div class='docblock'><p>use default domain name</p>
+</div><span id='variant.StayOpen' class='variant'><code>StayOpen</code></span><div class='docblock'><p>Keep TCP socket open</p>
+</div><span id='variant.DNSrch' class='variant'><code>DNSrch</code></span><div class='docblock'><p>search up local domain tree</p>
+</div><span id='variant.Insecure1' class='variant'><code>Insecure1</code></span><div class='docblock'><p>type 1 security disabled</p>
+</div><span id='variant.Insecure2' class='variant'><code>Insecure2</code></span><div class='docblock'><p>type 2 security disabled</p>
+</div><span id='variant.NoAliases' class='variant'><code>NoAliases</code></span><div class='docblock'><p>shuts off HOSTALIASES feature</p>
+</div><span id='variant.UseInet6' class='variant'><code>UseInet6</code></span><div class='docblock'><p>use/map IPv6 in gethostbyname()</p>
+</div><span id='variant.Rotate' class='variant'><code>Rotate</code></span><div class='docblock'><p>rotate ns list after each query</p>
+</div><span id='variant.NoCheckName' class='variant'><code>NoCheckName</code></span><div class='docblock'><p>do not check names for sanity (!IMPL)</p>
+</div><span id='variant.KeepTSIG' class='variant'><code>KeepTSIG</code></span><div class='docblock'><p>do not strip TSIG records</p>
+</div><span id='variant.Blast' class='variant'><code>Blast</code></span><div class='docblock'><p>blast all recursive servers</p>
+</div><span id='variant.UseBString' class='variant'><code>UseBString</code></span><div class='docblock'><p>IPv6 reverse lookup with byte strings</p>
+</div><span id='variant.NoIp6DotInt' class='variant'><code>NoIp6DotInt</code></span><div class='docblock'><p>Do not use .ip6.int in IPv6 reverse lookup</p>
+</div><span id='variant.UseEDNS0' class='variant'><code>UseEDNS0</code></span><div class='docblock'><p>Use EDNS0.</p>
+</div><span id='variant.SngLkup' class='variant'><code>SngLkup</code></span><div class='docblock'><p>one outstanding request at a time</p>
+</div><span id='variant.SngLkupReop' class='variant'><code>SngLkupReop</code></span><div class='docblock'><p>one outstanding request at a time, but open new socket for each request</p>
+</div><span id='variant.UseDNSSEC' class='variant'><code>UseDNSSEC</code></span><div class='docblock'><p>use DNSSEC using OK bit in OPT</p>
+</div><span id='variant.NoTLDQuery' class='variant'><code>NoTLDQuery</code></span><div class='docblock'><p>Do not look up unqualified name as a TLD.</p>
+</div><span id='variant.Default' class='variant'><code>Default</code></span><div class='docblock'><p>Default values</p>
+</div><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html' title='core::cmp::PartialEq'>PartialEq</a> for <a class='enum' href='../resolv/enum.ResolverOption.html' title='resolv::ResolverOption'>ResolverOption</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-690' class='srclink' href='../src/resolv/src/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.eq' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq' class='fnname'>eq</a>(&amp;self, __arg_0: &amp;<a class='enum' href='../resolv/enum.ResolverOption.html' title='resolv::ResolverOption'>ResolverOption</a>) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code></h4>
+<div class='docblock'><p>This method tests for <code>self</code> and <code>other</code> values to be equal, and is used by <code>==</code>. <a href="https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#tymethod.eq">Read more</a></p>
+</div><h4 id='method.ne' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/cmp/trait.PartialEq.html#method.ne' class='fnname'>ne</a>(&amp;self, other: &amp;Rhs) -&gt; <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a></code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+<div class='docblock'><p>This method tests for <code>!=</code>.</p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../resolv/enum.ResolverOption.html' title='resolv::ResolverOption'>ResolverOption</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-696' class='srclink' href='../src/resolv/src/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../resolv/enum.ResolverOption.html' title='resolv::ResolverOption'>ResolverOption</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-697' class='srclink' href='../src/resolv/src/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../resolv/enum.ResolverOption.html' title='resolv::ResolverOption'>ResolverOption</a></code></h4>
+<div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div></h4>
+<div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div><h3 class='impl'><span class='in-band'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../resolv/enum.ResolverOption.html' title='resolv::ResolverOption'>ResolverOption</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-700' class='srclink' href='../src/resolv/src/lib.rs.html#63' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+<div class='docblock'><p>Formats the value using the given formatter.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "resolv";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `src/lib.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>lib.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+</pre><pre class='rust '>
+<span class='doccomment'>//! This library consists of a high-level interface to Gnu libc&#39;s (glibc) `libresolv` DNS</span>
+<span class='doccomment'>//! resolver.  It allows you to look up DNS resource records of any type (e.g. A, AAAA, MX, TXT,</span>
+<span class='doccomment'>//! etc), use recursion (if your system&#39;s DNS resolver permits it), and perform the DNS search</span>
+<span class='doccomment'>//! algorithm to complete incomplete names, all via your operating system (glibc, not the kernel).</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The lower level library, libresolv-sys, was generated from glibc version 2.23 on linux,</span>
+<span class='doccomment'>//! using the newer thread-safe function calls.  It may not work on older version of glibc, or</span>
+<span class='doccomment'>//! on other operating systems.  Pull-requests which improve portability are appreciated.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! # Example</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ````</span>
+<span class='doccomment'>//! extern crate resolv;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! use resolv::{Resolver, Class, RecordType, Section, Record};</span>
+<span class='doccomment'>//! use resolv::record::MX;</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! fn main() {</span>
+<span class='doccomment'>//!     // You must create a mutable resolver object to hold the context.</span>
+<span class='doccomment'>//!     let mut resolver = Resolver::new().unwrap();</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     // .query() and .search() are the main interfaces to the resolver.</span>
+<span class='doccomment'>//!     let mut response = resolver.query(b&quot;gmail.com&quot;, Class::IN,</span>
+<span class='doccomment'>//!                                       RecordType::MX).unwrap();</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!     // .get_section_count() returns the number of records in that</span>
+<span class='doccomment'>//!     // section of the response.  There are four sections, but we</span>
+<span class='doccomment'>//!     // usually care about `Section::Answer`</span>
+<span class='doccomment'>//!     for i in 0..response.get_section_count(Section::Answer) {</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!         // As records are strongly typed, you must know what you are</span>
+<span class='doccomment'>//!         // looking for.  If you assign into the wrong type, a run-time</span>
+<span class='doccomment'>//!         // error `WrongRRType` will be returned.</span>
+<span class='doccomment'>//!         let mx: Record&lt;MX&gt; = response.get_record(Section::Answer, i)</span>
+<span class='doccomment'>//!                              .unwrap();</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//!        println!(&quot;{:?}&quot;, mx);</span>
+<span class='doccomment'>//!     }</span>
+<span class='doccomment'>//! }</span>
+<span class='doccomment'>//! ````</span>
+
+<span class='kw'>extern</span> <span class='kw'>crate</span> <span class='ident'>libresolv_sys</span>;
+
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>error</span>;
+<span class='kw'>use</span> <span class='ident'>error</span>::{<span class='ident'>Error</span>, <span class='ident'>ResolutionError</span>};
+
+<span class='kw'>mod</span> <span class='ident'>response</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>response</span>::{<span class='ident'>Response</span>, <span class='ident'>Section</span>, <span class='ident'>Flags</span>};
+
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>record</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>record</span>::{<span class='ident'>Record</span>, <span class='ident'>RecordType</span>, <span class='ident'>Class</span>};
+
+<span class='attribute'>#[<span class='ident'>cfg</span>(<span class='ident'>test</span>)]</span>
+<span class='kw'>mod</span> <span class='ident'>tests</span>;
+
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ffi</span>::<span class='ident'>CString</span>;
+<span class='kw'>use</span> <span class='ident'>std</span>::<span class='ident'>ops</span>::{<span class='ident'>Deref</span>, <span class='ident'>DerefMut</span>};
+
+<span class='kw'>type</span> <span class='ident'>Context</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>__res_state</span>;
+
+<span class='doccomment'>/// Options for the Resolver</span>
+<span class='attribute'>#[<span class='ident'>repr</span>(<span class='ident'>u64</span>)]</span>
+<span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>, <span class='ident'>Copy</span>, <span class='ident'>PartialEq</span>)]</span>
+<span class='kw'>pub</span> <span class='kw'>enum</span> <span class='ident'>ResolverOption</span> {
+    <span class='doccomment'>/// address initialized</span>
+    <span class='ident'>Init</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_INIT</span>,
+    <span class='doccomment'>/// print debug messages</span>
+    <span class='ident'>Debug</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_DEBUG</span>,
+    <span class='doccomment'>/// authoritative answers only (!IMPL)</span>
+    <span class='ident'>AAOnly</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_AAONLY</span>,
+    <span class='doccomment'>/// use virtual circuit</span>
+    <span class='ident'>UseVC</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_USEVC</span>,
+    <span class='doccomment'>/// query primary server only (!IMPL)</span>
+    <span class='ident'>Primary</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_PRIMARY</span>,
+    <span class='doccomment'>/// ignore truncation errors</span>
+    <span class='ident'>IgnTc</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_IGNTC</span>,
+    <span class='doccomment'>/// recursion desired</span>
+    <span class='ident'>Recurse</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_RECURSE</span>,
+    <span class='doccomment'>/// use default domain name</span>
+    <span class='ident'>DefNames</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_DEFNAMES</span>,
+    <span class='doccomment'>/// Keep TCP socket open</span>
+    <span class='ident'>StayOpen</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_STAYOPEN</span>,
+    <span class='doccomment'>/// search up local domain tree</span>
+    <span class='ident'>DNSrch</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_DNSRCH</span>,
+    <span class='doccomment'>/// type 1 security disabled</span>
+    <span class='ident'>Insecure1</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_INSECURE1</span>,
+    <span class='doccomment'>/// type 2 security disabled</span>
+    <span class='ident'>Insecure2</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_INSECURE2</span>,
+    <span class='doccomment'>/// shuts off HOSTALIASES feature</span>
+    <span class='ident'>NoAliases</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_NOALIASES</span>,
+    <span class='doccomment'>/// use/map IPv6 in gethostbyname()</span>
+    <span class='ident'>UseInet6</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_USE_INET6</span>,
+    <span class='doccomment'>/// rotate ns list after each query</span>
+    <span class='ident'>Rotate</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_ROTATE</span>,
+    <span class='doccomment'>/// do not check names for sanity (!IMPL)</span>
+    <span class='ident'>NoCheckName</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_NOCHECKNAME</span>,
+    <span class='doccomment'>/// do not strip TSIG records</span>
+    <span class='ident'>KeepTSIG</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_KEEPTSIG</span>,
+    <span class='doccomment'>/// blast all recursive servers</span>
+    <span class='ident'>Blast</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_BLAST</span>,
+    <span class='doccomment'>/// IPv6 reverse lookup with byte strings</span>
+    <span class='ident'>UseBString</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_USEBSTRING</span>,
+    <span class='doccomment'>/// Do not use .ip6.int in IPv6 reverse lookup</span>
+    <span class='ident'>NoIp6DotInt</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_NOIP6DOTINT</span>,
+    <span class='doccomment'>/// Use EDNS0.</span>
+    <span class='ident'>UseEDNS0</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_USE_EDNS0</span>,
+    <span class='doccomment'>/// one outstanding request at a time</span>
+    <span class='ident'>SngLkup</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_SNGLKUP</span>,
+    <span class='doccomment'>/// one outstanding request at a time, but open new socket for each request</span>
+    <span class='ident'>SngLkupReop</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_SNGLKUPREOP</span>,
+    <span class='doccomment'>/// use DNSSEC using OK bit in OPT</span>
+    <span class='ident'>UseDNSSEC</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_USE_DNSSEC</span>,
+    <span class='doccomment'>/// Do not look up unqualified name as a TLD.</span>
+    <span class='ident'>NoTLDQuery</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_NOTLDQUERY</span>,
+    <span class='doccomment'>/// Default values</span>
+    <span class='ident'>Default</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>RES_DEFAULT</span>,
+}
+
+<span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>Resolver</span> {
+    <span class='ident'>context</span>: <span class='ident'>Context</span>
+}
+
+<span class='kw'>impl</span> <span class='ident'>Resolver</span> {
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>new</span>() <span class='op'>-&gt;</span> <span class='prelude-ty'>Option</span><span class='op'>&lt;</span><span class='ident'>Resolver</span><span class='op'>&gt;</span>
+    {
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>resolver</span> <span class='op'>=</span> <span class='ident'>Resolver</span> {
+            <span class='ident'>context</span>: <span class='ident'>libresolv_sys</span>::<span class='ident'>__res_state</span>::<span class='ident'>default</span>(),
+        };
+
+        <span class='kw'>if</span> <span class='kw'>unsafe</span> {
+            <span class='ident'>libresolv_sys</span>::<span class='ident'>__res_ninit</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>resolver</span>.<span class='ident'>context</span>)
+        } <span class='op'>!=</span> <span class='number'>0</span> {
+            <span class='kw'>return</span> <span class='prelude-val'>None</span>
+        }
+
+        <span class='ident'>resolver</span>.<span class='ident'>option</span>(<span class='ident'>ResolverOption</span>::<span class='ident'>Default</span>, <span class='bool-val'>true</span>);
+
+        <span class='prelude-val'>Some</span>(<span class='ident'>resolver</span>)
+    }
+
+    <span class='doccomment'>/// Set or unset an option</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>option</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>option</span>: <span class='ident'>ResolverOption</span>, <span class='ident'>value</span>: <span class='ident'>bool</span>) {
+        <span class='kw'>if</span> <span class='ident'>value</span> {
+            <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>options</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>options</span> <span class='op'>|</span> (<span class='ident'>option</span> <span class='kw'>as</span> <span class='ident'>u64</span>);
+        } <span class='kw'>else</span> {
+            <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>options</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>options</span> <span class='kw-2'>&amp;</span> <span class='op'>!</span>(<span class='ident'>option</span> <span class='kw'>as</span> <span class='ident'>u64</span>);
+        }
+    }
+
+    <span class='doccomment'>/// Lookup the record.  Applies the search algorithm to the domain name given</span>
+    <span class='doccomment'>/// (if not fully qualified, it completes it using rules specified in `resolv.conf`</span>
+    <span class='doccomment'>/// search entries).  In addition, this also searches your hosts file.  Applies</span>
+    <span class='doccomment'>/// recursion if available and not turned off (it is on by default).</span>
+    <span class='doccomment'>///</span>
+    <span class='doccomment'>/// This is the highest level resolver routine, and is the one called by</span>
+    <span class='doccomment'>/// gethostbyname.</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>search</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
+                  <span class='ident'>name</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>],
+                  <span class='ident'>class</span>: <span class='ident'>Class</span>,
+                  <span class='ident'>typ</span>: <span class='ident'>RecordType</span>)
+                  <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Response</span>, <span class='ident'>Error</span><span class='op'>&gt;</span>
+    {
+        <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>name</span>) {
+            <span class='prelude-val'>Ok</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>c</span>,
+            <span class='prelude-val'>Err</span>(<span class='ident'>n</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>CString</span>(<span class='ident'>n</span>)),
+        };
+        <span class='kw'>let</span> <span class='ident'>buflen</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>NS_PACKETSZ</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buffer</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>buflen</span>));
+
+        <span class='kw'>let</span> <span class='ident'>rlen</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
+            <span class='ident'>libresolv_sys</span>::<span class='ident'>__res_nsearch</span>(
+                <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>context</span>,
+                <span class='ident'>name</span>.<span class='ident'>as_ptr</span>(),
+                <span class='ident'>class</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
+                <span class='ident'>typ</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
+                <span class='ident'>buffer</span>.<span class='ident'>deref_mut</span>().<span class='ident'>as_mut_ptr</span>(),
+                <span class='ident'>buflen</span> <span class='kw'>as</span> <span class='ident'>i32</span>)
+        };
+        <span class='kw'>if</span> <span class='ident'>rlen</span><span class='op'>==</span><span class='op'>-</span><span class='number'>1</span> {
+            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>(<span class='self'>self</span>.<span class='ident'>get_error</span>()));
+        }
+
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>msg</span>: <span class='ident'>libresolv_sys</span>::<span class='ident'>__ns_msg</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>__ns_msg</span>::<span class='ident'>default</span>();
+        <span class='kw'>unsafe</span> {
+            <span class='kw'>if</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>ns_initparse</span>(<span class='ident'>buffer</span>.<span class='ident'>deref</span>().<span class='ident'>as_ptr</span>(), <span class='ident'>rlen</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>msg</span>) <span class='op'>&lt;</span> <span class='number'>0</span> {
+                <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>ParseError</span>);
+            }
+        }
+
+        <span class='prelude-val'>Ok</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>msg</span>, <span class='ident'>buffer</span>))
+    }
+
+    <span class='doccomment'>/// Lookup the record.  Does not apply the search algorithm, so `dname` must be a complete</span>
+    <span class='doccomment'>/// domain name, and only DNS will be consulted (not your hosts file).  Applies recursion</span>
+    <span class='doccomment'>/// if available and not turned off (it is on by default).</span>
+    <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>query</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>,
+                 <span class='ident'>dname</span>: <span class='kw-2'>&amp;</span>[<span class='ident'>u8</span>],
+                 <span class='ident'>class</span>: <span class='ident'>Class</span>,
+                 <span class='ident'>typ</span>: <span class='ident'>RecordType</span>)
+                 <span class='op'>-&gt;</span> <span class='prelude-ty'>Result</span><span class='op'>&lt;</span><span class='ident'>Response</span>, <span class='ident'>Error</span><span class='op'>&gt;</span>
+    {
+        <span class='kw'>let</span> <span class='ident'>name</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='ident'>CString</span>::<span class='ident'>new</span>(<span class='ident'>dname</span>) {
+            <span class='prelude-val'>Ok</span>(<span class='ident'>c</span>) <span class='op'>=&gt;</span> <span class='ident'>c</span>,
+            <span class='prelude-val'>Err</span>(<span class='ident'>n</span>) <span class='op'>=&gt;</span> <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>CString</span>(<span class='ident'>n</span>)),
+        };
+        <span class='kw'>let</span> <span class='ident'>buflen</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>NS_PACKETSZ</span> <span class='kw'>as</span> <span class='ident'>usize</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buffer</span>: <span class='ident'>Box</span><span class='op'>&lt;</span><span class='ident'>Vec</span><span class='op'>&lt;</span><span class='ident'>u8</span><span class='op'>&gt;&gt;</span> <span class='op'>=</span> <span class='ident'>Box</span>::<span class='ident'>new</span>(<span class='ident'>Vec</span>::<span class='ident'>with_capacity</span>(<span class='ident'>buflen</span>));
+
+        <span class='kw'>let</span> <span class='ident'>rlen</span>: <span class='ident'>i32</span> <span class='op'>=</span> <span class='kw'>unsafe</span> {
+            <span class='ident'>libresolv_sys</span>::<span class='ident'>__res_nquery</span>(
+                <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>.<span class='ident'>context</span>,
+                <span class='ident'>name</span>.<span class='ident'>as_ptr</span>(),
+                <span class='ident'>class</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
+                <span class='ident'>typ</span> <span class='kw'>as</span> <span class='ident'>i32</span>,
+                <span class='ident'>buffer</span>.<span class='ident'>deref_mut</span>().<span class='ident'>as_mut_ptr</span>(),
+                <span class='ident'>buflen</span> <span class='kw'>as</span> <span class='ident'>i32</span>)
+        };
+        <span class='kw'>if</span> <span class='ident'>rlen</span><span class='op'>==</span><span class='op'>-</span><span class='number'>1</span> {
+            <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>From</span>::<span class='ident'>from</span>(<span class='self'>self</span>.<span class='ident'>get_error</span>()));
+        }
+
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>msg</span>: <span class='ident'>libresolv_sys</span>::<span class='ident'>__ns_msg</span> <span class='op'>=</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>__ns_msg</span>::<span class='ident'>default</span>();
+        <span class='kw'>unsafe</span> {
+            <span class='kw'>if</span> <span class='ident'>libresolv_sys</span>::<span class='ident'>ns_initparse</span>(<span class='ident'>buffer</span>.<span class='ident'>deref</span>().<span class='ident'>as_ptr</span>(), <span class='ident'>rlen</span>, <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>msg</span>) <span class='op'>&lt;</span> <span class='number'>0</span> {
+                <span class='kw'>return</span> <span class='prelude-val'>Err</span>(<span class='ident'>Error</span>::<span class='ident'>ParseError</span>);
+            }
+        }
+
+        <span class='prelude-val'>Ok</span>(<span class='ident'>Response</span>::<span class='ident'>new</span>(<span class='ident'>msg</span>, <span class='ident'>buffer</span>))
+    }
+
+    <span class='kw'>fn</span> <span class='ident'>get_error</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>ResolutionError</span>
+    {
+        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>context</span>.<span class='ident'>res_h_errno</span> {
+            <span class='number'>0</span> <span class='op'>=&gt;</span> <span class='ident'>ResolutionError</span>::<span class='ident'>Success</span>,
+            <span class='number'>1</span> <span class='op'>=&gt;</span> <span class='ident'>ResolutionError</span>::<span class='ident'>HostNotFound</span>,
+            <span class='number'>2</span> <span class='op'>=&gt;</span> <span class='ident'>ResolutionError</span>::<span class='ident'>TryAgain</span>,
+            <span class='number'>3</span> <span class='op'>=&gt;</span> <span class='ident'>ResolutionError</span>::<span class='ident'>NoRecovery</span>,
+            <span class='number'>4</span> <span class='op'>=&gt;</span> <span class='ident'>ResolutionError</span>::<span class='ident'>NoData</span>,
+            _ <span class='op'>=&gt;</span> <span class='ident'>ResolutionError</span>::<span class='ident'>HostNotFound</span>, <span class='comment'>// fallback</span>
+        }
+    }
+}
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../../";
+        window.currentCrate = "resolv";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../../jquery.js"></script>
+    <script src="../../../main.js"></script>
+    
+    <script defer src="../../../search-index.js"></script>
+</body>
+</html>

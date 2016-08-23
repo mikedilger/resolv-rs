@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Resolver` struct in crate `resolv`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Resolver">
+
+    <title>resolv::Resolver - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='index.html'>resolv</a></p><script>window.sidebarCurrent = {name: 'Resolver', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content struct">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>resolv</a>::<wbr><a class='struct' href=''>Resolver</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-783' class='srclink' href='../src/resolv/src/lib.rs.html#119-121' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct Resolver {
+    // some fields omitted
+}</pre><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../resolv/struct.Resolver.html' title='resolv::Resolver'>Resolver</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-785' class='srclink' href='../src/resolv/src/lib.rs.html#123-243' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>() -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/option/enum.Option.html' title='core::option::Option'>Option</a>&lt;<a class='struct' href='../resolv/struct.Resolver.html' title='resolv::Resolver'>Resolver</a>&gt;</code></h4>
+<h4 id='method.option' class='method'><code>fn <a href='#method.option' class='fnname'>option</a>(&amp;mut self, option: <a class='enum' href='../resolv/enum.ResolverOption.html' title='resolv::ResolverOption'>ResolverOption</a>, value: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.bool.html'>bool</a>)</code></h4>
+<div class='docblock'><p>Set or unset an option</p>
+</div><h4 id='method.search' class='method'><code>fn <a href='#method.search' class='fnname'>search</a>(&amp;mut self, name: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>, class: <a class='enum' href='../resolv/enum.Class.html' title='resolv::Class'>Class</a>, typ: <a class='enum' href='../resolv/record/enum.RecordType.html' title='resolv::record::RecordType'>RecordType</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../resolv/struct.Response.html' title='resolv::Response'>Response</a>,&nbsp;<a class='enum' href='../resolv/error/enum.Error.html' title='resolv::error::Error'>Error</a>&gt;</code></h4>
+<div class='docblock'><p>Lookup the record.  Applies the search algorithm to the domain name given
+(if not fully qualified, it completes it using rules specified in <code>resolv.conf</code>
+search entries).  In addition, this also searches your hosts file.  Applies
+recursion if available and not turned off (it is on by default).</p>
+
+<p>This is the highest level resolver routine, and is the one called by
+gethostbyname.</p>
+</div><h4 id='method.query' class='method'><code>fn <a href='#method.query' class='fnname'>query</a>(&amp;mut self, dname: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>&amp;[</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.u8.html'>u8</a><a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.slice.html'>]</a>, class: <a class='enum' href='../resolv/enum.Class.html' title='resolv::Class'>Class</a>, typ: <a class='enum' href='../resolv/record/enum.RecordType.html' title='resolv::record::RecordType'>RecordType</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../resolv/struct.Response.html' title='resolv::Response'>Response</a>,&nbsp;<a class='enum' href='../resolv/error/enum.Error.html' title='resolv::error::Error'>Error</a>&gt;</code></h4>
+<div class='docblock'><p>Lookup the record.  Does not apply the search algorithm, so <code>dname</code> must be a complete
+domain name, and only DNS will be consulted (not your hosts file).  Applies recursion
+if available and not turned off (it is on by default).</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "resolv";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
