@@ -1,0 +1,15 @@
+[package]
+name = "resolv"
+version = "0.1.0-pre"
+authors = ["Mike Dilger <mike@optcomp.nz>"]
+license = "MIT/Apache-2.0"
+keywords = ["resolv", "dns"]
+readme = "README.md"
+repository = "https://github.com/mikedilger/resolv-rs"
+homepage = "https://github.com/mikedilger/resolv-rs"
+documentation = "https://mikedilger.github.io/resolv-rs"
+description = """
+DNS resolution via glibc
+"""
+
+[dependencies]
