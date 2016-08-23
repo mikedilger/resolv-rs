@@ -101,8 +101,8 @@
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>MX</span> {
-    <span class='ident'>preference</span>: <span class='ident'>i16</span>,
-    <span class='ident'>exchange</span>: <span class='ident'>String</span>,
+    <span class='kw'>pub</span> <span class='ident'>preference</span>: <span class='ident'>i16</span>,
+    <span class='kw'>pub</span> <span class='ident'>exchange</span>: <span class='ident'>String</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>RecordData</span> <span class='kw'>for</span> <span class='ident'>MX</span> {

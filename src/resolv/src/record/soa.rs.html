@@ -171,13 +171,13 @@
 
 <span class='attribute'>#[<span class='ident'>derive</span>(<span class='ident'>Debug</span>, <span class='ident'>Clone</span>)]</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>SOA</span> {
-    <span class='ident'>mname</span>: <span class='ident'>String</span>,
-    <span class='ident'>rname</span>: <span class='ident'>String</span>,
-    <span class='ident'>serial</span>: <span class='ident'>u32</span>,
-    <span class='ident'>refresh</span>: <span class='ident'>u32</span>,
-    <span class='ident'>retry</span>: <span class='ident'>u32</span>,
-    <span class='ident'>expire</span>: <span class='ident'>u32</span>,
-    <span class='ident'>minimum</span>: <span class='ident'>u32</span>,
+    <span class='kw'>pub</span> <span class='ident'>mname</span>: <span class='ident'>String</span>,
+    <span class='kw'>pub</span> <span class='ident'>rname</span>: <span class='ident'>String</span>,
+    <span class='kw'>pub</span> <span class='ident'>serial</span>: <span class='ident'>u32</span>,
+    <span class='kw'>pub</span> <span class='ident'>refresh</span>: <span class='ident'>u32</span>,
+    <span class='kw'>pub</span> <span class='ident'>retry</span>: <span class='ident'>u32</span>,
+    <span class='kw'>pub</span> <span class='ident'>expire</span>: <span class='ident'>u32</span>,
+    <span class='kw'>pub</span> <span class='ident'>minimum</span>: <span class='ident'>u32</span>,
 }
 
 <span class='kw'>impl</span> <span class='ident'>RecordData</span> <span class='kw'>for</span> <span class='ident'>SOA</span> {

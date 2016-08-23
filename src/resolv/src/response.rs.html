@@ -245,6 +245,7 @@
 <span id="201">201</span>
 <span id="202">202</span>
 <span id="203">203</span>
+<span id="204">204</span>
 </pre><pre class='rust '>
 
 <span class='kw'>use</span> ::<span class='ident'>libresolv_sys</span>::<span class='ident'>__ns_msg</span> <span class='kw'>as</span> <span class='ident'>Message</span>;
@@ -419,6 +420,7 @@
     }
 }
 
+<span class='doccomment'>/// An iterator to iterate through DNS records</span>
 <span class='kw'>pub</span> <span class='kw'>struct</span> <span class='ident'>RecordItems</span><span class='op'>&lt;</span><span class='lifetime'>&#39;a</span>, <span class='ident'>T</span>: <span class='ident'>RecordData</span><span class='op'>&gt;</span> {
     <span class='ident'>msg</span>: <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;a</span> <span class='kw-2'>mut</span> <span class='ident'>Message</span>,
     <span class='ident'>section</span>: <span class='ident'>Section</span>,
