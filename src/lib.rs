@@ -40,6 +40,7 @@
 //! ````
 
 extern crate libresolv_sys;
+extern crate byteorder;
 
 pub mod error;
 use error::{Error, ResolutionError};

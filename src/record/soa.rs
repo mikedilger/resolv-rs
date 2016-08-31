@@ -1,11 +1,12 @@
 
 use super::{RecordData, RecordType};
 use ::error::Error;
-use ::libresolv_sys::__ns_rr as Rr;
-use ::libresolv_sys::__ns_msg as Message;
-use ::libresolv_sys::MAXDNAME;
-
+use libresolv_sys::__ns_rr as Rr;
+use libresolv_sys::__ns_msg as Message;
+use libresolv_sys::MAXDNAME;
+use byteorder::{BigEndian, ByteOrder};
 use std::ffi::CStr;
+use std::slice;
 
 #[derive(Debug, Clone)]
 pub struct SOA {
@@ -73,42 +74,32 @@ impl RecordData for SOA {
         };
 
         soa.serial = unsafe {
-            ((*rr.rdata.offset(offset) as u32) << 24)
-                + ((*rr.rdata.offset(offset+1) as u32) << 16)
-                + ((*rr.rdata.offset(offset+2) as u32) << 8)
-                + (*rr.rdata.offset(offset+3) as u32)
+            let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(offset), 4);
+            BigEndian::read_u32(slice)
         };
         offset += 4;
 
         soa.refresh = unsafe {
-            ((*rr.rdata.offset(offset) as u32) << 24)
-                + ((*rr.rdata.offset(offset+1) as u32) << 16)
-                + ((*rr.rdata.offset(offset+2) as u32) << 8)
-                + (*rr.rdata.offset(offset+3) as u32)
+            let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(offset), 4);
+            BigEndian::read_u32(slice)
         };
         offset += 4;
 
         soa.retry = unsafe {
-            ((*rr.rdata.offset(offset) as u32) << 24)
-                + ((*rr.rdata.offset(offset+1) as u32) << 16)
-                + ((*rr.rdata.offset(offset+2) as u32) << 8)
-                + (*rr.rdata.offset(offset+3) as u32)
+            let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(offset), 4);
+            BigEndian::read_u32(slice)
         };
         offset += 4;
 
         soa.expire = unsafe {
-            ((*rr.rdata.offset(offset) as u32) << 24)
-                + ((*rr.rdata.offset(offset+1) as u32) << 16)
-                + ((*rr.rdata.offset(offset+2) as u32) << 8)
-                + (*rr.rdata.offset(offset+3) as u32)
+            let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(offset), 4);
+            BigEndian::read_u32(slice)
         };
         offset += 4;
 
         soa.minimum = unsafe {
-            ((*rr.rdata.offset(offset) as u32) << 24)
-                + ((*rr.rdata.offset(offset+1) as u32) << 16)
-                + ((*rr.rdata.offset(offset+2) as u32) << 8)
-                + (*rr.rdata.offset(offset+3) as u32)
+            let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(offset), 4);
+            BigEndian::read_u32(slice)
         };
 
         Ok(soa)

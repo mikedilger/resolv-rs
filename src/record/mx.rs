@@ -1,11 +1,12 @@
 
 use super::{RecordData, RecordType};
 use ::error::Error;
-use ::libresolv_sys::__ns_rr as Rr;
-use ::libresolv_sys::__ns_msg as Message;
-use ::libresolv_sys::MAXDNAME;
-
+use libresolv_sys::__ns_rr as Rr;
+use libresolv_sys::__ns_msg as Message;
+use libresolv_sys::MAXDNAME;
+use byteorder::{BigEndian, ByteOrder};
 use std::ffi::CStr;
+use std::slice;
 
 #[derive(Debug, Clone)]
 pub struct MX {
@@ -36,10 +37,9 @@ impl RecordData for MX {
 
         Ok(MX {
             preference: unsafe {
-                ((*rr.rdata as i16) << 8)
-                    + (*rr.rdata.offset(1) as i16)
+                let slice: &[u8] = slice::from_raw_parts(rr.rdata, 2);
+                BigEndian::read_i16(slice)
             },
-
             exchange: unsafe { CStr::from_ptr(buffer.as_ptr() as *const i8)
                                .to_string_lossy().into_owned() },
         })
