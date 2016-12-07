@@ -50,28 +50,74 @@ pub enum Error {
     WrongRRType,
     /// String is not valid UTF-8
     Utf8(Utf8Error),
-    /// Unknown class 
+    /// Unknown class
     UnknownClass(u16),
 }
 impl fmt::Debug for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        use ::std::error::Error as StdError;
+
         match *self {
-            Error::Resolver(ref e) => write!(f, "Name Resolution failed: {:?}", e),
+            Error::Resolver(ref e) => write!(f, "{}: {:?}", self.description(), e),
             Error::CString(ref e) => write!(f, "Name supplied contains a null byte at \
                                                 position {}", e.nul_position()),
-            Error::CStr(ref e) => write!(f, "CStr failed: {:?}", e),
-            Error::ParseError => write!(f, "Name service response does not parse"),
+            Error::CStr(ref e) => write!(f, "{}: {:?}", self.description(), e),
             Error::NoSuchSectionIndex(s,i) => write!(f, "No such section index \
                                                          (section={:?}, index={})",
                                                      s, i),
-            Error::UncompressError => write!(f, "Error uncompressing domain name"),
-            Error::Unterminated => write!(f, "Result from dn_expand was not null terminated"),
-            Error::WrongRRType => write!(f, "Wrong Resource Record type"),
-            Error::Utf8(ref e) => write!(f, "UTF-8 error: {:?}", e),
-            Error::UnknownClass(u) => write!(f, "Unknown class: {}", u),
+            Error::Utf8(ref e) => write!(f, "{}: {:?}", self.description(), e),
+            Error::UnknownClass(u) => write!(f, "{}: {}", self.description(), u),
+            _ => write!(f, "{}", self.description()),
         }
     }
 }
+
+impl ::std::error::Error for Error {
+    fn description(&self) -> &str
+    {
+        match *self {
+            Error::Resolver(_) => "Name Resolution failed",
+            Error::CString(_) => "Name supplied contains a null byte",
+            Error::CStr(_) => "CStr failed",
+            Error::ParseError => "Name service response does not parse",
+            Error::NoSuchSectionIndex(_,_) => "No such section index",
+            Error::UncompressError => "Error uncompressing domain name",
+            Error::Unterminated => "Result from dn_expand was not null terminated",
+            Error::WrongRRType => "Wrong Resource Record type",
+            Error::Utf8(_) => "UTF-8 error",
+            Error::UnknownClass(_) => "Unknown class",
+        }
+    }
+
+    fn cause(&self) -> Option<&::std::error::Error>
+    {
+        match *self {
+            Error::CString(ref e) => Some(e),
+            Error::Utf8(ref e) => Some(e),
+            _ => None,
+        }
+    }
+}
+
+impl fmt::Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        use ::std::error::Error as StdError;
+
+        match *self {
+            Error::Resolver(ref e) => write!(f, "{}: {:?}", self.description(), e),
+            Error::CString(ref e) => write!(f, "Name supplied contains a null byte at \
+                                                position {}", e.nul_position()),
+            Error::CStr(ref e) => write!(f, "{}: {:?}", self.description(), e),
+            Error::NoSuchSectionIndex(s,i) => write!(f, "No such section index \
+                                                         (section={:?}, index={})",
+                                                     s, i),
+            Error::Utf8(ref e) => write!(f, "{}: {}", self.description(), e),
+            Error::UnknownClass(u) => write!(f, "{}: {}", self.description(), u),
+            _ =>  write!(f, "{}", self.description()),
+        }
+    }
+}
+
 impl From<ResolutionError> for Error {
     fn from(err: ResolutionError) -> Error {
         Error::Resolver( err )
