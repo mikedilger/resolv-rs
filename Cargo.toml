@@ -15,4 +15,4 @@ DNS resolution via glibc
 [dependencies]
 libc = "0.2"
 libresolv-sys = { path = "libresolv-sys", version = "0.1.0" }
-byteorder = "0.5"
+byteorder = "1.0"
