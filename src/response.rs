@@ -185,20 +185,26 @@ impl<'a, T: RecordData> Iterator for RecordItems<'a, T> {
     fn next(&mut self) -> Option<Record<T>>
     {
         let len = self.msg._counts[self.section.ns_sect() as usize] as usize;
-        if self.index >= len {
-            return None;
-        }
 
-        let mut rr: Rr = Rr::default();
-        unsafe {
-            if ::libresolv_sys::ns_parserr(self.msg, self.section.ns_sect(),
-                                           self.index as i32, &mut rr) < 0
-            {
+        loop {
+            if self.index >= len {
                 return None;
             }
-        }
-        self.index += 1;
 
-        Record::extract(self.msg, &rr).ok()
+            let mut rr: Rr = Rr::default();
+            unsafe {
+                if ::libresolv_sys::ns_parserr(self.msg, self.section.ns_sect(),
+                                               self.index as i32, &mut rr) < 0
+                {
+                    return None;
+                }
+            }
+            self.index += 1;
+
+            match Record::extract(self.msg, &rr) {
+                Ok(record) => return Some(record),
+                Err(_e) => {} // skip the record by looping around
+            }
+        }
     }
 }
