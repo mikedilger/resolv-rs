@@ -196,6 +196,7 @@ impl<'a, T: RecordData> Iterator for RecordItems<'a, T> {
                 if ::libresolv_sys::ns_parserr(self.msg, self.section.ns_sect(),
                                                self.index as i32, &mut rr) < 0
                 {
+                    self.index = len;
                     return None;
                 }
             }
