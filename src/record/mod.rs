@@ -139,6 +139,8 @@ pub enum RecordType {
     NSEC3 = 50,
     /// RFC 5155 - NSEC3 parameters
     NSEC3PARAM = 51,
+    /// RFC 6698 - DNS-Based Authentication for TLS
+    TLSA = 52,
     /// RFC 5205 - Host Identity Protocol
     HIP = 55,
     /// Child DS - RFC 7344
@@ -178,6 +180,7 @@ pub use self::ptr::PTR;
 pub use self::mx::MX;
 pub use self::txt::TXT;
 pub use self::aaaa::AAAA;
+pub use self::tlsa::TLSA;
 
 // FIXME: Add the other record types
 mod a;
@@ -188,3 +191,4 @@ mod ptr;
 mod mx;
 mod txt;
 mod aaaa;
+mod tlsa;
