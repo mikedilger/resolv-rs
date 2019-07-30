@@ -1,10 +1,10 @@
 
-use ::libresolv_sys::__ns_msg as Message;
-use ::libresolv_sys::__ns_sect as NSSection;
-use ::libresolv_sys::__ns_rr as Rr;
+use libresolv_sys::__ns_msg as Message;
+use libresolv_sys::__ns_sect as NSSection;
+use libresolv_sys::__ns_rr as Rr;
 
-use ::error::Error;
-use ::record::{Record, RecordData};
+use crate::error::Error;
+use crate::record::{Record, RecordData};
 
 pub struct Flags(pub u16);
 

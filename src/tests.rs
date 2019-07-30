@@ -1,6 +1,6 @@
-use ::{Resolver, Class, RecordType, Section};
-use ::record::MX;
-use ::record::TLSA;
+use crate::{Resolver, Class, RecordType, Section};
+use crate::record::MX;
+use crate::record::TLSA;
 
 #[test]
 fn basic_test_query() {

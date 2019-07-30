@@ -1,5 +1,5 @@
 
-use ::error::Error;
+use crate::error::Error;
 
 /// DNS Class.
 #[derive(Debug, Clone, Copy, PartialEq)]

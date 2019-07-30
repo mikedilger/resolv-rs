@@ -1,9 +1,9 @@
 
 use super::{RecordData, RecordType};
-use ::error::Error;
-use ::libresolv_sys::__ns_rr as Rr;
-use ::libresolv_sys::__ns_msg as Message;
-use ::libresolv_sys::MAXDNAME;
+use crate::error::Error;
+use libresolv_sys::__ns_rr as Rr;
+use libresolv_sys::__ns_msg as Message;
+use libresolv_sys::MAXDNAME;
 
 use std::ffi::CStr;
 

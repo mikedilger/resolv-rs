@@ -1,8 +1,8 @@
 
 use std::ffi::CStr;
-use ::error::Error;
-use ::libresolv_sys::__ns_rr as Rr;
-use ::libresolv_sys::__ns_msg as Message;
+use crate::error::Error;
+use libresolv_sys::__ns_rr as Rr;
+use libresolv_sys::__ns_msg as Message;
 
 mod class;
 pub use self::class::Class;
@@ -30,9 +30,9 @@ impl<T: RecordData> Record<T> {
     pub fn extract(msg: &mut Message, rr: &Rr) -> Result<Record<T>, Error> {
         Ok(Record {
             name: unsafe { CStr::from_ptr(rr.name.as_ptr()).to_string_lossy().into_owned() },
-            class: try!(Class::from_rr_class(rr.rr_class)),
+            class: Class::from_rr_class(rr.rr_class)?,
             ttl: rr.ttl,
-            data: try!(<T as RecordData>::extract(msg, rr)),
+            data: <T as RecordData>::extract(msg, rr)?,
         })
     }
 }

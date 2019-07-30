@@ -3,7 +3,7 @@ use std::fmt;
 use std::convert::From;
 use std::ffi::{NulError, FromBytesWithNulError};
 use std::str::Utf8Error;
-use ::Section;
+use crate::Section;
 
 // Taken in part from glibc-2.23/resolv/herror.c h_errlist
 #[repr(i32)]

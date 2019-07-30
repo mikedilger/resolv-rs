@@ -7,12 +7,13 @@ keywords = ["resolv", "dns"]
 readme = "README.md"
 repository = "https://github.com/mikedilger/resolv-rs"
 homepage = "https://github.com/mikedilger/resolv-rs"
-documentation = "https://mikedilger.github.io/resolv-rs"
+documentation = "https://docs.rs/resolv-rs"
 description = """
 DNS resolution via glibc
 """
+edition = "2018"
 
 [dependencies]
 libc = "0.2"
 libresolv-sys = { path = "libresolv-sys", version = "0.1.0" }
-byteorder = "1.0"
+byteorder = "1"
