@@ -55,7 +55,6 @@ pub enum Error {
 }
 impl fmt::Debug for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        use ::std::error::Error as StdError;
 
         match *self {
             Error::Resolver(ref e) => write!(f, "{}: {:?}", self.description(), e),
@@ -71,8 +70,7 @@ impl fmt::Debug for Error {
         }
     }
 }
-
-impl ::std::error::Error for Error {
+impl Error {
     fn description(&self) -> &str
     {
         match *self {
@@ -89,7 +87,9 @@ impl ::std::error::Error for Error {
         }
     }
 
-    fn cause(&self) -> Option<&::std::error::Error>
+}
+impl ::std::error::Error for Error {
+    fn cause(&self) -> Option<&dyn (::std::error::Error)>
     {
         match *self {
             Error::CString(ref e) => Some(e),
@@ -101,8 +101,6 @@ impl ::std::error::Error for Error {
 
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        use ::std::error::Error as StdError;
-
         match *self {
             Error::Resolver(ref e) => write!(f, "{}: {:?}", self.description(), e),
             Error::CString(ref e) => write!(f, "Name supplied contains a null byte at \
