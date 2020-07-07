@@ -61,11 +61,14 @@ pub enum Section {
 impl Section {
     fn ns_sect(&self) -> NSSection
     {
+        use ::libresolv_sys::{__ns_sect_ns_s_qd, __ns_sect_ns_s_an,
+                              __ns_sect_ns_s_ns, __ns_sect_ns_s_ar};
+
         match *self {
-            Section::Question => NSSection::ns_s_qd,
-            Section::Answer => NSSection::ns_s_an,
-            Section::Authority => NSSection::ns_s_ns,
-            Section::Additional => NSSection::ns_s_ar,
+            Section::Question => __ns_sect_ns_s_qd,
+            Section::Answer => __ns_sect_ns_s_an,
+            Section::Authority => __ns_sect_ns_s_ns,
+            Section::Additional => __ns_sect_ns_s_ar,
         }
     }
 }

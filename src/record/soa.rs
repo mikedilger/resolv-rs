@@ -47,7 +47,7 @@ impl RecordData for SOA {
                 msg._eom,
                 rr.rdata.offset(offset),
                 buffer.as_mut_ptr() as *mut i8,
-                MAXDNAME as usize)
+                MAXDNAME as u64)
             };
             if count < 0 {
                 return Err(Error::UncompressError);
@@ -63,7 +63,7 @@ impl RecordData for SOA {
                 msg._eom,
                 rr.rdata.offset(offset),
                 buffer.as_mut_ptr() as *mut i8,
-                MAXDNAME as usize)
+                MAXDNAME as u64)
             };
             if count < 0 {
                 return Err(Error::UncompressError);

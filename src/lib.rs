@@ -60,19 +60,15 @@ use std::ops::{Deref, DerefMut};
 type Context = libresolv_sys::__res_state;
 
 /// Options for the Resolver
-#[repr(u64)]
+#[repr(u32)]
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum ResolverOption {
     /// address initialized
     Init = libresolv_sys::RES_INIT,
     /// print debug messages
     Debug = libresolv_sys::RES_DEBUG,
-    /// authoritative answers only (!IMPL)
-    AAOnly = libresolv_sys::RES_AAONLY,
     /// use virtual circuit
     UseVC = libresolv_sys::RES_USEVC,
-    /// query primary server only (!IMPL)
-    Primary = libresolv_sys::RES_PRIMARY,
     /// ignore truncation errors
     IgnTc = libresolv_sys::RES_IGNTC,
     /// recursion desired
@@ -83,26 +79,10 @@ pub enum ResolverOption {
     StayOpen = libresolv_sys::RES_STAYOPEN,
     /// search up local domain tree
     DNSrch = libresolv_sys::RES_DNSRCH,
-    /// type 1 security disabled
-    Insecure1 = libresolv_sys::RES_INSECURE1,
-    /// type 2 security disabled
-    Insecure2 = libresolv_sys::RES_INSECURE2,
     /// shuts off HOSTALIASES feature
     NoAliases = libresolv_sys::RES_NOALIASES,
-    /// use/map IPv6 in gethostbyname()
-    UseInet6 = libresolv_sys::RES_USE_INET6,
     /// rotate ns list after each query
     Rotate = libresolv_sys::RES_ROTATE,
-    /// do not check names for sanity (!IMPL)
-    NoCheckName = libresolv_sys::RES_NOCHECKNAME,
-    /// do not strip TSIG records
-    KeepTSIG = libresolv_sys::RES_KEEPTSIG,
-    /// blast all recursive servers
-    Blast = libresolv_sys::RES_BLAST,
-    /// IPv6 reverse lookup with byte strings
-    UseBString = libresolv_sys::RES_USEBSTRING,
-    /// Do not use .ip6.int in IPv6 reverse lookup
-    NoIp6DotInt = libresolv_sys::RES_NOIP6DOTINT,
     /// Use EDNS0.
     UseEDNS0 = libresolv_sys::RES_USE_EDNS0,
     /// one outstanding request at a time
@@ -113,6 +93,10 @@ pub enum ResolverOption {
     UseDNSSEC = libresolv_sys::RES_USE_DNSSEC,
     /// Do not look up unqualified name as a TLD.
     NoTLDQuery = libresolv_sys::RES_NOTLDQUERY,
+    /// No automatic configuration reload (since glibc 2.26; invalid in prior versions)
+    NoReload = libresolv_sys::RES_NORELOAD,
+    /// Request AD bit, keep it in responses (since glibc 2.31; invalid in prior version)
+    TrustAD = libresolv_sys::RES_TRUSTAD,
     /// Default values
     Default = libresolv_sys::RES_DEFAULT,
 }

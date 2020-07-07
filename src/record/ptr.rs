@@ -27,7 +27,7 @@ impl RecordData for PTR {
             msg._eom,
             rr.rdata,
             buffer.as_mut_ptr() as *mut i8,
-            MAXDNAME as usize)
+            MAXDNAME as u64)
         };
         if size < 0 {
             return Err(Error::UncompressError);
