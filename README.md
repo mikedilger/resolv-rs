@@ -2,6 +2,9 @@
 
 DNS resolution via glibc.
 
+Note: If you are only looking up IP addresses for DNS names and don't need other records
+(MX, TXT, etc), consider other more portable rust libraries like `dns-lookup`.
+
 This uses `libresolv.so` which is typically configured via `/etc/resolv.conf` to do DNS
 resolution.  It allows you to look up DNS resource records of any type (e.g. A, AAAA, MX, TXT,
 etc), use recursion (if your system's DNS resolver permits it), and perform the DNS search
@@ -38,8 +41,8 @@ You cannot specify a DNS server separate from editing `/etc/resolv.conf` for the
 system.
 
 `libresolv-sys` was generated from glibc version 2.31 on linux and may not be compatible with
-older systems or systems of other flavours.  Additionally, the thread-safe interfaces are used,
-which may not be available on older systems.  Pull requests which improve portability are
+older systems or systems of other flavours. Additionally, the thread-safe interfaces are used,
+which may not be available on older systems. Pull requests which improve portability are
 appreciated.
 
 Not all NS record types are supported yet.
