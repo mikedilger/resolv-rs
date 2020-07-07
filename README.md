@@ -37,7 +37,7 @@ fn main() {
 You cannot specify a DNS server separate from editing `/etc/resolv.conf` for the entire
 system.
 
-`libresolv-sys` was generated from glibc version 2.23 on linux and may not be compatible with
+`libresolv-sys` was generated from glibc version 2.31 on linux and may not be compatible with
 older systems or systems of other flavours.  Additionally, the thread-safe interfaces are used,
 which may not be available on older systems.  Pull requests which improve portability are
 appreciated.
