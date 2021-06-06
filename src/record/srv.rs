@@ -11,7 +11,7 @@ use std::slice;
 pub struct SRV {
     pub priority: i16,
     pub weight: i16,
-    pub port: i16,
+    pub port: u16,
     pub name: String,
 }
 
@@ -50,7 +50,7 @@ impl RecordData for SRV {
             },
             port: unsafe {
                 let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(4), 2);
-                BigEndian::read_i16(slice)
+                BigEndian::read_u16(slice)
             },
             name: unsafe {
                 CStr::from_ptr(buffer.as_ptr() as *const i8)
