@@ -181,6 +181,7 @@ pub use self::mx::MX;
 pub use self::txt::TXT;
 pub use self::aaaa::AAAA;
 pub use self::tlsa::TLSA;
+pub use self::srv::SRV;
 
 // FIXME: Add the other record types
 mod a;
@@ -192,3 +193,4 @@ mod mx;
 mod txt;
 mod aaaa;
 mod tlsa;
+mod srv;
