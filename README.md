@@ -40,10 +40,18 @@ fn main() {
 You cannot specify a DNS server separate from editing `/etc/resolv.conf` for the entire
 system.
 
-`libresolv-sys` was generated from glibc version 2.31 on linux and may not be compatible with
-older systems or systems of other flavours. Additionally, the thread-safe interfaces are used,
-which may not be available on older systems. Pull requests which improve portability are
-appreciated.
+`libresolv-sys` was generated from glibc version 2.33 on linux and may not be compatible with
+older or newer systems or systems of other flavours. Additionally, the thread-safe interfaces
+are used, which may not be available on older systems. Pull requests which improve portability
+are appreciated.
+
+If you need to support a different version of glibc, regenerate libresolv-sys/lib.rs with
+rust bindgen:
+
+````sh
+  cargo install bindgen
+  bindgen --builtins --with-derive-default /usr/include/resolv.h > libresolv-sys/lib.rs
+````
 
 Not all NS record types are supported yet.
 
