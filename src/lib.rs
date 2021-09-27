@@ -153,7 +153,7 @@ impl Resolver {
         let mut buffer: Box<Vec<u8>> = Box::new(Vec::with_capacity(buflen));
 
         let rlen: i32 = unsafe {
-            libresolv_sys::__res_nsearch(
+            libresolv_sys::res_nsearch(
                 &mut self.context,
                 name.as_ptr(),
                 class as i32,
@@ -192,7 +192,7 @@ impl Resolver {
         let mut buffer: Box<Vec<u8>> = Box::new(Vec::with_capacity(buflen));
 
         let rlen: i32 = unsafe {
-            libresolv_sys::__res_nquery(
+            libresolv_sys::res_nquery(
                 &mut self.context,
                 name.as_ptr(),
                 class as i32,
