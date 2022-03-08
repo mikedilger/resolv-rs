@@ -1,8 +1,8 @@
 use super::{RecordData, RecordType};
 use crate::error::Error;
 use byteorder::{BigEndian, ByteOrder};
-use libresolv_sys::__ns_msg as Message;
-use libresolv_sys::__ns_rr as Rr;
+use libresolv_sys::ns_msg as Message;
+use libresolv_sys::ns_rr as Rr;
 use libresolv_sys::MAXHOSTNAMELEN;
 use std::ffi::CStr;
 use std::slice;

@@ -1,7 +1,7 @@
 
-use libresolv_sys::__ns_msg as Message;
-use libresolv_sys::__ns_sect as NSSection;
-use libresolv_sys::__ns_rr as Rr;
+use libresolv_sys::ns_msg as Message;
+use libresolv_sys::ns_sect as NSSection;
+use libresolv_sys::ns_rr as Rr;
 
 use crate::error::Error;
 use crate::record::{Record, RecordData};

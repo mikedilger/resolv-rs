@@ -1,7 +1,7 @@
 use super::{RecordData, RecordType};
 use crate::error::Error;
-use libresolv_sys::__ns_rr as Rr;
-use libresolv_sys::__ns_msg as Message;
+use libresolv_sys::ns_rr as Rr;
+use libresolv_sys::ns_msg as Message;
 use std::io::Cursor;
 use byteorder::ReadBytesExt;
 use std::slice;
