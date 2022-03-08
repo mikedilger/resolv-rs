@@ -113,7 +113,7 @@ impl Resolver {
         };
 
         if unsafe {
-            libresolv_sys::__res_ninit(&mut resolver.context)
+            libresolv_sys::res_ninit(&mut resolver.context)
         } != 0 {
             return None
         }
@@ -165,7 +165,7 @@ impl Resolver {
             return Err(From::from(self.get_error()));
         }
 
-        let mut msg: libresolv_sys::__ns_msg = libresolv_sys::__ns_msg::default();
+        let mut msg: libresolv_sys::ns_msg = libresolv_sys::ns_msg::default();
         unsafe {
             if libresolv_sys::ns_initparse(buffer.deref().as_ptr(), rlen, &mut msg) < 0 {
                 return Err(Error::ParseError);
@@ -204,7 +204,7 @@ impl Resolver {
             return Err(From::from(self.get_error()));
         }
 
-        let mut msg: libresolv_sys::__ns_msg = libresolv_sys::__ns_msg::default();
+        let mut msg: libresolv_sys::ns_msg = libresolv_sys::ns_msg::default();
         unsafe {
             if libresolv_sys::ns_initparse(buffer.deref().as_ptr(), rlen, &mut msg) < 0 {
                 return Err(Error::ParseError);
