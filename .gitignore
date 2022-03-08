@@ -1,2 +1,4 @@
-target
+/libresolv-sys/lib.rs
+/libresolv-sys/resolv.rs
+/target
 Cargo.lock

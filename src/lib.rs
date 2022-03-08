@@ -113,7 +113,7 @@ impl Resolver {
         };
 
         if unsafe {
-            libresolv_sys::__res_ninit(&mut resolver.context)
+            libresolv_sys::res_ninit(&mut resolver.context)
         } != 0 {
             return None
         }
@@ -153,7 +153,7 @@ impl Resolver {
         let mut buffer: Box<Vec<u8>> = Box::new(Vec::with_capacity(buflen));
 
         let rlen: i32 = unsafe {
-            libresolv_sys::__res_nsearch(
+            libresolv_sys::res_nsearch(
                 &mut self.context,
                 name.as_ptr(),
                 class as i32,
@@ -165,7 +165,7 @@ impl Resolver {
             return Err(From::from(self.get_error()));
         }
 
-        let mut msg: libresolv_sys::__ns_msg = libresolv_sys::__ns_msg::default();
+        let mut msg: libresolv_sys::ns_msg = libresolv_sys::ns_msg::default();
         unsafe {
             if libresolv_sys::ns_initparse(buffer.deref().as_ptr(), rlen, &mut msg) < 0 {
                 return Err(Error::ParseError);
@@ -192,7 +192,7 @@ impl Resolver {
         let mut buffer: Box<Vec<u8>> = Box::new(Vec::with_capacity(buflen));
 
         let rlen: i32 = unsafe {
-            libresolv_sys::__res_nquery(
+            libresolv_sys::res_nquery(
                 &mut self.context,
                 name.as_ptr(),
                 class as i32,
@@ -204,7 +204,7 @@ impl Resolver {
             return Err(From::from(self.get_error()));
         }
 
-        let mut msg: libresolv_sys::__ns_msg = libresolv_sys::__ns_msg::default();
+        let mut msg: libresolv_sys::ns_msg = libresolv_sys::ns_msg::default();
         unsafe {
             if libresolv_sys::ns_initparse(buffer.deref().as_ptr(), rlen, &mut msg) < 0 {
                 return Err(Error::ParseError);
