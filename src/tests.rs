@@ -28,7 +28,8 @@ fn basic_test_query() {
     assert_eq!(response.get_section_count(Section::Answer), count);
 }
 
-#[test]
+// This DNS domain no longer responds. FIXME.
+// #[test]
 fn test_tlsa() {
     let mut resolver = Resolver::new().unwrap();
     let mut response = resolver.query(b"_443._tcp.www.middlebox-dane.org", Class::IN, RecordType::TLSA).unwrap();
