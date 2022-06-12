@@ -1,6 +1,6 @@
 [package]
 name = "resolv"
-version = "0.3.0"
+version = "0.3.1-unstable"
 authors = ["Mike Dilger <mike@optcomp.nz>"]
 license = "MIT/Apache-2.0"
 keywords = ["resolv", "dns"]
