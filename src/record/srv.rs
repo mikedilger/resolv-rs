@@ -32,7 +32,7 @@ impl RecordData for SRV {
                 msg._eom,
                 rr.rdata.offset(6),
                 buffer.as_mut_ptr() as *mut i8,
-                MAXHOSTNAMELEN as u64,
+                MAXHOSTNAMELEN as usize,
             )
         };
         if size < 0 {
