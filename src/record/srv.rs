@@ -7,7 +7,7 @@ use libresolv_sys::MAXHOSTNAMELEN;
 use std::ffi::CStr;
 use std::slice;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SRV {
     pub priority: i16,
     pub weight: i16,
