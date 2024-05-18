@@ -9,8 +9,8 @@ use std::slice;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SRV {
-    pub priority: i16,
-    pub weight: i16,
+    pub priority: u16,
+    pub weight: u16,
     pub port: u16,
     pub name: String,
 }
@@ -42,11 +42,11 @@ impl RecordData for SRV {
         Ok(SRV {
             priority: unsafe {
                 let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(0), 2);
-                BigEndian::read_i16(slice)
+                BigEndian::read_u16(slice)
             },
             weight: unsafe {
                 let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(2), 2);
-                BigEndian::read_i16(slice)
+                BigEndian::read_u16(slice)
             },
             port: unsafe {
                 let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(4), 2);
