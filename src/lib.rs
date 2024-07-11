@@ -39,17 +39,17 @@
 //! }
 //! ````
 
-extern crate libresolv_sys;
 extern crate byteorder;
+extern crate libresolv_sys;
 
 pub mod error;
 use error::{Error, ResolutionError};
 
 mod response;
-pub use response::{Response, Section, Flags, RecordItems};
+pub use response::{Flags, RecordItems, Response, Section};
 
 pub mod record;
-pub use record::{Record, RecordType, Class};
+pub use record::{Class, Record, RecordType};
 
 #[cfg(test)]
 mod tests;
@@ -102,20 +102,17 @@ pub enum ResolverOption {
 }
 
 pub struct Resolver {
-    context: Context
+    context: Context,
 }
 
 impl Resolver {
-    pub fn new() -> Option<Resolver>
-    {
+    pub fn new() -> Option<Resolver> {
         let mut resolver = Resolver {
             context: libresolv_sys::__res_state::default(),
         };
 
-        if unsafe {
-            libresolv_sys::res_ninit(&mut resolver.context)
-        } != 0 {
-            return None
+        if unsafe { libresolv_sys::res_ninit(&mut resolver.context) } != 0 {
+            return None;
         }
 
         resolver.option(ResolverOption::Default, true);
@@ -139,12 +136,12 @@ impl Resolver {
     ///
     /// This is the highest level resolver routine, and is the one called by
     /// gethostbyname.
-    pub fn search(&mut self,
-                  name: &[u8],
-                  class: Class,
-                  typ: RecordType)
-                  -> Result<Response, Error>
-    {
+    pub fn search(
+        &mut self,
+        name: &[u8],
+        class: Class,
+        typ: RecordType,
+    ) -> Result<Response, Error> {
         let name = match CString::new(name) {
             Ok(c) => c,
             Err(n) => return Err(Error::CString(n)),
@@ -159,9 +156,10 @@ impl Resolver {
                 class as i32,
                 typ as i32,
                 buffer.deref_mut().as_mut_ptr(),
-                buflen as i32)
+                buflen as i32,
+            )
         };
-        if rlen==-1 {
+        if rlen == -1 {
             return Err(From::from(self.get_error()));
         }
 
@@ -178,12 +176,12 @@ impl Resolver {
     /// Lookup the record.  Does not apply the search algorithm, so `dname` must be a complete
     /// domain name, and only DNS will be consulted (not your hosts file).  Applies recursion
     /// if available and not turned off (it is on by default).
-    pub fn query(&mut self,
-                 dname: &[u8],
-                 class: Class,
-                 typ: RecordType)
-                 -> Result<Response, Error>
-    {
+    pub fn query(
+        &mut self,
+        dname: &[u8],
+        class: Class,
+        typ: RecordType,
+    ) -> Result<Response, Error> {
         let name = match CString::new(dname) {
             Ok(c) => c,
             Err(n) => return Err(Error::CString(n)),
@@ -198,9 +196,10 @@ impl Resolver {
                 class as i32,
                 typ as i32,
                 buffer.deref_mut().as_mut_ptr(),
-                buflen as i32)
+                buflen as i32,
+            )
         };
-        if rlen==-1 {
+        if rlen == -1 {
             return Err(From::from(self.get_error()));
         }
 
@@ -214,8 +213,7 @@ impl Resolver {
         Ok(Response::new(msg, buffer))
     }
 
-    fn get_error(&self) -> ResolutionError
-    {
+    fn get_error(&self) -> ResolutionError {
         match self.context.res_h_errno {
             0 => ResolutionError::Success,
             1 => ResolutionError::HostNotFound,

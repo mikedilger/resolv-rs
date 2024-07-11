@@ -1,9 +1,8 @@
-
-use std::fmt;
-use std::convert::From;
-use std::ffi::{NulError, FromBytesWithNulError};
-use std::str::Utf8Error;
 use crate::Section;
+use std::convert::From;
+use std::ffi::{FromBytesWithNulError, NulError};
+use std::fmt;
+use std::str::Utf8Error;
 
 #[derive(Clone, PartialEq, Eq)]
 // Taken in part from glibc-2.23/resolv/herror.c h_errlist
@@ -23,11 +22,11 @@ pub enum ResolutionError {
 impl fmt::Debug for ResolutionError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
-            ResolutionError::Success =>  write!(f, "Resolver Error 0 (no error)"),
-            ResolutionError::HostNotFound =>  write!(f, "Unknown host"),
-            ResolutionError::TryAgain =>  write!(f, "Host name lookup failure"),
-            ResolutionError::NoRecovery =>  write!(f, "Unknown server error"),
-            ResolutionError::NoData =>  write!(f, "No address associated with name"),
+            ResolutionError::Success => write!(f, "Resolver Error 0 (no error)"),
+            ResolutionError::HostNotFound => write!(f, "Unknown host"),
+            ResolutionError::TryAgain => write!(f, "Host name lookup failure"),
+            ResolutionError::NoRecovery => write!(f, "Unknown server error"),
+            ResolutionError::NoData => write!(f, "No address associated with name"),
         }
     }
 }
@@ -57,15 +56,21 @@ pub enum Error {
 }
 impl fmt::Debug for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-
         match *self {
             Error::Resolver(ref e) => write!(f, "{}: {:?}", self.description(), e),
-            Error::CString(ref e) => write!(f, "Name supplied contains a null byte at \
-                                                position {}", e.nul_position()),
+            Error::CString(ref e) => write!(
+                f,
+                "Name supplied contains a null byte at \
+                                                position {}",
+                e.nul_position()
+            ),
             Error::CStr(ref e) => write!(f, "{}: {:?}", self.description(), e),
-            Error::NoSuchSectionIndex(s,i) => write!(f, "No such section index \
+            Error::NoSuchSectionIndex(s, i) => write!(
+                f,
+                "No such section index \
                                                          (section={:?}, index={})",
-                                                     s, i),
+                s, i
+            ),
             Error::Utf8(ref e) => write!(f, "{}: {:?}", self.description(), e),
             Error::UnknownClass(u) => write!(f, "{}: {}", self.description(), u),
             _ => write!(f, "{}", self.description()),
@@ -73,14 +78,13 @@ impl fmt::Debug for Error {
     }
 }
 impl Error {
-    fn description(&self) -> &str
-    {
+    fn description(&self) -> &str {
         match *self {
             Error::Resolver(_) => "Name Resolution failed",
             Error::CString(_) => "Name supplied contains a null byte",
             Error::CStr(_) => "CStr failed",
             Error::ParseError => "Name service response does not parse",
-            Error::NoSuchSectionIndex(_,_) => "No such section index",
+            Error::NoSuchSectionIndex(_, _) => "No such section index",
             Error::UncompressError => "Error uncompressing domain name",
             Error::Unterminated => "Result from dn_expand was not null terminated",
             Error::WrongRRType => "Wrong Resource Record type",
@@ -88,11 +92,9 @@ impl Error {
             Error::UnknownClass(_) => "Unknown class",
         }
     }
-
 }
 impl ::std::error::Error for Error {
-    fn cause(&self) -> Option<&dyn (::std::error::Error)>
-    {
+    fn cause(&self) -> Option<&dyn (::std::error::Error)> {
         match *self {
             Error::CString(ref e) => Some(e),
             Error::Utf8(ref e) => Some(e),
@@ -105,31 +107,38 @@ impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match *self {
             Error::Resolver(ref e) => write!(f, "{}: {:?}", self.description(), e),
-            Error::CString(ref e) => write!(f, "Name supplied contains a null byte at \
-                                                position {}", e.nul_position()),
+            Error::CString(ref e) => write!(
+                f,
+                "Name supplied contains a null byte at \
+                                                position {}",
+                e.nul_position()
+            ),
             Error::CStr(ref e) => write!(f, "{}: {:?}", self.description(), e),
-            Error::NoSuchSectionIndex(s,i) => write!(f, "No such section index \
+            Error::NoSuchSectionIndex(s, i) => write!(
+                f,
+                "No such section index \
                                                          (section={:?}, index={})",
-                                                     s, i),
+                s, i
+            ),
             Error::Utf8(ref e) => write!(f, "{}: {}", self.description(), e),
             Error::UnknownClass(u) => write!(f, "{}: {}", self.description(), u),
-            _ =>  write!(f, "{}", self.description()),
+            _ => write!(f, "{}", self.description()),
         }
     }
 }
 
 impl From<ResolutionError> for Error {
     fn from(err: ResolutionError) -> Error {
-        Error::Resolver( err )
+        Error::Resolver(err)
     }
 }
 impl From<Utf8Error> for Error {
     fn from(err: Utf8Error) -> Error {
-        Error::Utf8( err )
+        Error::Utf8(err)
     }
 }
 impl From<FromBytesWithNulError> for Error {
     fn from(err: FromBytesWithNulError) -> Error {
-        Error::CStr( err )
+        Error::CStr(err)
     }
 }

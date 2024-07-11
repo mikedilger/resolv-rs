@@ -1,10 +1,9 @@
-
 use super::{RecordData, RecordType};
 use crate::error::Error;
-use libresolv_sys::ns_rr as Rr;
-use libresolv_sys::ns_msg as Message;
-use libresolv_sys::MAXDNAME;
 use byteorder::{BigEndian, ByteOrder};
+use libresolv_sys::ns_msg as Message;
+use libresolv_sys::ns_rr as Rr;
+use libresolv_sys::MAXDNAME;
 use std::ffi::CStr;
 use std::slice;
 
@@ -25,7 +24,9 @@ impl RecordData for SOA {
     }
 
     fn extract(msg: &mut Message, rr: &Rr) -> Result<SOA, Error> {
-        if rr.type_ != Self::get_record_type() as u16 { return Err(Error::WrongRRType); }
+        if rr.type_ != Self::get_record_type() as u16 {
+            return Err(Error::WrongRRType);
+        }
 
         let mut soa = SOA {
             mname: "".to_owned(),
@@ -42,35 +43,45 @@ impl RecordData for SOA {
         let mut offset = 0;
 
         soa.mname = {
-            let count = unsafe { ::libresolv_sys::ns_name_uncompress(
-                msg._msg,
-                msg._eom,
-                rr.rdata.offset(offset),
-                buffer.as_mut_ptr() as *mut i8,
-                MAXDNAME as usize)
+            let count = unsafe {
+                ::libresolv_sys::ns_name_uncompress(
+                    msg._msg,
+                    msg._eom,
+                    rr.rdata.offset(offset),
+                    buffer.as_mut_ptr() as *mut i8,
+                    MAXDNAME as usize,
+                )
             };
             if count < 0 {
                 return Err(Error::UncompressError);
             }
             offset += count as isize;
-            unsafe { CStr::from_ptr(buffer.as_ptr() as *const i8)
-                     .to_string_lossy().into_owned() }
+            unsafe {
+                CStr::from_ptr(buffer.as_ptr() as *const i8)
+                    .to_string_lossy()
+                    .into_owned()
+            }
         };
 
         soa.rname = {
-            let count = unsafe { ::libresolv_sys::ns_name_uncompress(
-                msg._msg,
-                msg._eom,
-                rr.rdata.offset(offset),
-                buffer.as_mut_ptr() as *mut i8,
-                MAXDNAME as usize)
+            let count = unsafe {
+                ::libresolv_sys::ns_name_uncompress(
+                    msg._msg,
+                    msg._eom,
+                    rr.rdata.offset(offset),
+                    buffer.as_mut_ptr() as *mut i8,
+                    MAXDNAME as usize,
+                )
             };
             if count < 0 {
                 return Err(Error::UncompressError);
             }
             offset += count as isize;
-            unsafe { CStr::from_ptr(buffer.as_ptr() as *const i8)
-                     .to_string_lossy().into_owned() }
+            unsafe {
+                CStr::from_ptr(buffer.as_ptr() as *const i8)
+                    .to_string_lossy()
+                    .into_owned()
+            }
         };
 
         soa.serial = unsafe {
@@ -105,4 +116,3 @@ impl RecordData for SOA {
         Ok(soa)
     }
 }
-

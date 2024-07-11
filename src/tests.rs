@@ -1,11 +1,13 @@
-use crate::{Resolver, Class, RecordType, Section};
 use crate::record::MX;
 use crate::record::TLSA;
+use crate::{Class, RecordType, Resolver, Section};
 
 #[test]
 fn basic_test_query() {
     let mut resolver = Resolver::new().unwrap();
-    let mut response = resolver.query(b"gmail.com", Class::IN, RecordType::MX).unwrap();
+    let mut response = resolver
+        .query(b"gmail.com", Class::IN, RecordType::MX)
+        .unwrap();
 
     // Verify that some of the default options came back to us
     let flags = response.get_flags();
@@ -32,7 +34,13 @@ fn basic_test_query() {
 // #[test]
 fn test_tlsa() {
     let mut resolver = Resolver::new().unwrap();
-    let mut response = resolver.query(b"_443._tcp.www.middlebox-dane.org", Class::IN, RecordType::TLSA).unwrap();
+    let mut response = resolver
+        .query(
+            b"_443._tcp.www.middlebox-dane.org",
+            Class::IN,
+            RecordType::TLSA,
+        )
+        .unwrap();
 
     // Verify that some of the default options came back to us
     let flags = response.get_flags();

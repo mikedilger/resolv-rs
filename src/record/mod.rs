@@ -1,8 +1,7 @@
-
-use std::ffi::CStr;
 use crate::error::Error;
-use libresolv_sys::ns_rr as Rr;
 use libresolv_sys::ns_msg as Message;
+use libresolv_sys::ns_rr as Rr;
+use std::ffi::CStr;
 
 mod class;
 pub use self::class::Class;
@@ -22,14 +21,18 @@ pub struct Record<T: RecordData> {
     pub name: String,
     pub class: Class,
     pub ttl: u32,
-    pub data: T
+    pub data: T,
 }
 
 impl<T: RecordData> Record<T> {
     /// For internal use.
     pub fn extract(msg: &mut Message, rr: &Rr) -> Result<Record<T>, Error> {
         Ok(Record {
-            name: unsafe { CStr::from_ptr(rr.name.as_ptr()).to_string_lossy().into_owned() },
+            name: unsafe {
+                CStr::from_ptr(rr.name.as_ptr())
+                    .to_string_lossy()
+                    .into_owned()
+            },
             class: Class::from_rr_class(rr.rr_class)?,
             ttl: rr.ttl,
             data: <T as RecordData>::extract(msg, rr)?,
@@ -173,24 +176,24 @@ pub enum RecordType {
 
 // FIXME: Add the other record types
 pub use self::a::A;
-pub use self::ns::NS;
-pub use self::cname::CNAME;
-pub use self::soa::SOA;
-pub use self::ptr::PTR;
-pub use self::mx::MX;
-pub use self::txt::TXT;
 pub use self::aaaa::AAAA;
-pub use self::tlsa::TLSA;
+pub use self::cname::CNAME;
+pub use self::mx::MX;
+pub use self::ns::NS;
+pub use self::ptr::PTR;
+pub use self::soa::SOA;
 pub use self::srv::SRV;
+pub use self::tlsa::TLSA;
+pub use self::txt::TXT;
 
 // FIXME: Add the other record types
 mod a;
-mod ns;
-mod cname;
-mod soa;
-mod ptr;
-mod mx;
-mod txt;
 mod aaaa;
-mod tlsa;
+mod cname;
+mod mx;
+mod ns;
+mod ptr;
+mod soa;
 mod srv;
+mod tlsa;
+mod txt;

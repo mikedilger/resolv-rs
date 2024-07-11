@@ -1,9 +1,9 @@
 use super::{RecordData, RecordType};
 use crate::error::Error;
-use libresolv_sys::ns_rr as Rr;
-use libresolv_sys::ns_msg as Message;
-use std::io::Cursor;
 use byteorder::ReadBytesExt;
+use libresolv_sys::ns_msg as Message;
+use libresolv_sys::ns_rr as Rr;
+use std::io::Cursor;
 use std::slice;
 
 #[derive(Debug, Clone)]
@@ -20,11 +20,12 @@ impl RecordData for TLSA {
     }
 
     fn extract(_msg: &mut Message, rr: &Rr) -> Result<TLSA, Error> {
-        if rr.type_ != Self::get_record_type() as u16 { return Err(Error::WrongRRType); }
+        if rr.type_ != Self::get_record_type() as u16 {
+            return Err(Error::WrongRRType);
+        }
 
-        let mut reader = unsafe{
-            Cursor::new(slice::from_raw_parts(rr.rdata, rr.rdlength as usize))
-        };
+        let mut reader =
+            unsafe { Cursor::new(slice::from_raw_parts(rr.rdata, rr.rdlength as usize)) };
 
         Ok(TLSA {
             usage: reader.read_u8().unwrap(),

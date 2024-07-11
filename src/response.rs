@@ -1,7 +1,6 @@
-
 use libresolv_sys::ns_msg as Message;
-use libresolv_sys::ns_sect as NSSection;
 use libresolv_sys::ns_rr as Rr;
+use libresolv_sys::ns_sect as NSSection;
 
 use crate::error::Error;
 use crate::record::{Record, RecordData};
@@ -56,13 +55,13 @@ pub enum Section {
     Question,
     Answer,
     Authority,
-    Additional
+    Additional,
 }
 impl Section {
-    fn ns_sect(&self) -> NSSection
-    {
-        use ::libresolv_sys::{__ns_sect_ns_s_qd, __ns_sect_ns_s_an,
-                              __ns_sect_ns_s_ns, __ns_sect_ns_s_ar};
+    fn ns_sect(&self) -> NSSection {
+        use ::libresolv_sys::{
+            __ns_sect_ns_s_an, __ns_sect_ns_s_ar, __ns_sect_ns_s_ns, __ns_sect_ns_s_qd,
+        };
 
         match *self {
             Section::Question => __ns_sect_ns_s_qd,
@@ -72,7 +71,6 @@ impl Section {
         }
     }
 }
-
 
 pub struct Response {
     msg: Message,
@@ -85,42 +83,39 @@ impl Response {
     pub fn new(msg: Message, buffer: Box<Vec<u8>>) -> Response {
         Response {
             msg: msg,
-            buffer: buffer
+            buffer: buffer,
         }
     }
 
     /// Gets the ID field of the Name Server response
-    pub fn get_id(&self) -> u16
-    {
+    pub fn get_id(&self) -> u16 {
         self.msg._id
     }
 
     /// Gets flags (and opcodes) in the header of the Name Server response
-    pub fn get_flags(&self) -> Flags
-    {
+    pub fn get_flags(&self) -> Flags {
         Flags(self.msg._flags)
     }
 
     /// Returns a count of how many records exist in the given section
-    pub fn get_section_count(&self, section: Section) -> usize
-    {
+    pub fn get_section_count(&self, section: Section) -> usize {
         self.msg._counts[section.ns_sect() as usize] as usize
     }
 
     /// Gets a record from a section.  Returns an error if index is out of bounds
     /// (use get_section_count()).  Also returns an error (at run-time) if assigned into
     /// a Record of the wrong type.
-    pub fn get_record<T>(&mut self, section: Section, index: usize)
-                         -> Result<Record<T>, Error>
-        where T: RecordData
+    pub fn get_record<T>(&mut self, section: Section, index: usize) -> Result<Record<T>, Error>
+    where
+        T: RecordData,
     {
         if index >= self.get_section_count(section) {
             return Err(Error::NoSuchSectionIndex(section, index));
         }
         let mut rr: Rr = Rr::default();
         unsafe {
-            if ::libresolv_sys::ns_parserr(&mut self.msg, section.ns_sect(),
-                                           index as i32, &mut rr) < 0
+            if ::libresolv_sys::ns_parserr(&mut self.msg, section.ns_sect(), index as i32, &mut rr)
+                < 0
             {
                 return Err(Error::ParseError);
             }
@@ -130,7 +125,8 @@ impl Response {
     }
 
     pub fn questions<T>(&mut self) -> RecordItems<T>
-        where T: RecordData
+    where
+        T: RecordData,
     {
         RecordItems {
             msg: &mut self.msg,
@@ -141,7 +137,8 @@ impl Response {
     }
 
     pub fn answers<T>(&mut self) -> RecordItems<T>
-        where T: RecordData
+    where
+        T: RecordData,
     {
         RecordItems {
             msg: &mut self.msg,
@@ -152,7 +149,8 @@ impl Response {
     }
 
     pub fn authorities<T>(&mut self) -> RecordItems<T>
-        where T: RecordData
+    where
+        T: RecordData,
     {
         RecordItems {
             msg: &mut self.msg,
@@ -163,7 +161,8 @@ impl Response {
     }
 
     pub fn additional_records<T>(&mut self) -> RecordItems<T>
-        where T: RecordData
+    where
+        T: RecordData,
     {
         RecordItems {
             msg: &mut self.msg,
@@ -185,8 +184,7 @@ pub struct RecordItems<'a, T: RecordData> {
 impl<'a, T: RecordData> Iterator for RecordItems<'a, T> {
     type Item = Record<T>;
 
-    fn next(&mut self) -> Option<Record<T>>
-    {
+    fn next(&mut self) -> Option<Record<T>> {
         let len = self.msg._counts[self.section.ns_sect() as usize] as usize;
 
         loop {
@@ -196,8 +194,12 @@ impl<'a, T: RecordData> Iterator for RecordItems<'a, T> {
 
             let mut rr: Rr = Rr::default();
             unsafe {
-                if ::libresolv_sys::ns_parserr(self.msg, self.section.ns_sect(),
-                                               self.index as i32, &mut rr) < 0
+                if ::libresolv_sys::ns_parserr(
+                    self.msg,
+                    self.section.ns_sect(),
+                    self.index as i32,
+                    &mut rr,
+                ) < 0
                 {
                     self.index = len;
                     return None;

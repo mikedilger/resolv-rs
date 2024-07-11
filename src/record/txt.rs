@@ -1,8 +1,7 @@
-
 use super::{RecordData, RecordType};
 use crate::error::Error;
-use libresolv_sys::ns_rr as Rr;
 use libresolv_sys::ns_msg as Message;
+use libresolv_sys::ns_rr as Rr;
 
 #[derive(Debug, Clone)]
 pub struct TXT {
@@ -15,14 +14,15 @@ impl RecordData for TXT {
     }
 
     fn extract(_msg: &mut Message, rr: &Rr) -> Result<TXT, Error> {
-        if rr.type_ != Self::get_record_type() as u16 { return Err(Error::WrongRRType); }
+        if rr.type_ != Self::get_record_type() as u16 {
+            return Err(Error::WrongRRType);
+        }
 
-        let slice: &[u8] = unsafe {
-            ::std::slice::from_raw_parts(rr.rdata.offset(1), *rr.rdata as usize)
-        };
+        let slice: &[u8] =
+            unsafe { ::std::slice::from_raw_parts(rr.rdata.offset(1), *rr.rdata as usize) };
 
         Ok(TXT {
-            dname: String::from_utf8_lossy(slice).into_owned()
+            dname: String::from_utf8_lossy(slice).into_owned(),
         })
     }
 }

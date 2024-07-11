@@ -1,11 +1,10 @@
-
 use super::{RecordData, RecordType};
 use crate::error::Error;
-use libresolv_sys::ns_rr as Rr;
 use libresolv_sys::ns_msg as Message;
+use libresolv_sys::ns_rr as Rr;
 
-use std::net::Ipv4Addr;
 use std::mem;
+use std::net::Ipv4Addr;
 
 #[derive(Debug, Clone)]
 pub struct A {
@@ -18,9 +17,11 @@ impl RecordData for A {
     }
 
     fn extract(_msg: &mut Message, rr: &Rr) -> Result<A, Error> {
-        if rr.type_ != Self::get_record_type() as u16 { return Err(Error::WrongRRType); }
+        if rr.type_ != Self::get_record_type() as u16 {
+            return Err(Error::WrongRRType);
+        }
         Ok(A {
-            address: Ipv4Addr::from( unsafe {
+            address: Ipv4Addr::from(unsafe {
                 let input: &[u8; 4] = mem::transmute(rr.rdata);
                 *input
             }),
