@@ -14,7 +14,7 @@ impl Flags {
     }
     #[inline]
     pub fn operation_code(&self) -> u16 {
-        ((self.0 & 0x7800) >> 11) as u16
+        (self.0 & 0x7800) >> 11
     }
     #[inline]
     pub fn authoritative_answer(&self) -> bool {
@@ -46,7 +46,7 @@ impl Flags {
     }
     #[inline]
     pub fn response_code(&self) -> u16 {
-        (self.0 & 0x000f) as u16
+        self.0 & 0x000f
     }
 }
 
@@ -82,8 +82,8 @@ impl Response {
     /// This is for internal use.
     pub fn new(msg: Message, buffer: Box<Vec<u8>>) -> Response {
         Response {
-            msg: msg,
-            buffer: buffer,
+            msg,
+            buffer,
         }
     }
 
