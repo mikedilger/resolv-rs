@@ -29,7 +29,7 @@ impl RecordData for MX {
             msg._eom,
             rr.rdata.offset(2),
             buffer.as_mut_ptr() as *mut i8,
-            MAXDNAME as u64)
+            MAXDNAME as usize)
         };
         if size < 0 {
             return Err(Error::UncompressError);

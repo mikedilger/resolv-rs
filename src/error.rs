@@ -5,6 +5,7 @@ use std::ffi::{NulError, FromBytesWithNulError};
 use std::str::Utf8Error;
 use crate::Section;
 
+#[derive(Clone, PartialEq, Eq)]
 // Taken in part from glibc-2.23/resolv/herror.c h_errlist
 #[repr(i32)]
 pub enum ResolutionError {
@@ -31,6 +32,7 @@ impl fmt::Debug for ResolutionError {
     }
 }
 
+#[derive(Clone, PartialEq, Eq)]
 pub enum Error {
     /// Name Resolution failed
     Resolver(ResolutionError),

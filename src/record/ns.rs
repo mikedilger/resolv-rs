@@ -27,7 +27,7 @@ impl RecordData for NS {
             msg._eom,
             rr.rdata,
             buffer.as_mut_ptr() as *mut i8,
-            MAXDNAME as u64)
+            MAXDNAME as usize)
         };
         if size < 0 {
             return Err(Error::UncompressError);

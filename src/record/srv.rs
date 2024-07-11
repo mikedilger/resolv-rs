@@ -7,10 +7,10 @@ use libresolv_sys::MAXHOSTNAMELEN;
 use std::ffi::CStr;
 use std::slice;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, PartialEq, Eq)]
 pub struct SRV {
-    pub priority: i16,
-    pub weight: i16,
+    pub priority: u16,
+    pub weight: u16,
     pub port: u16,
     pub name: String,
 }
@@ -32,7 +32,7 @@ impl RecordData for SRV {
                 msg._eom,
                 rr.rdata.offset(6),
                 buffer.as_mut_ptr() as *mut i8,
-                MAXHOSTNAMELEN as u64,
+                MAXHOSTNAMELEN as usize,
             )
         };
         if size < 0 {
@@ -42,11 +42,11 @@ impl RecordData for SRV {
         Ok(SRV {
             priority: unsafe {
                 let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(0), 2);
-                BigEndian::read_i16(slice)
+                BigEndian::read_u16(slice)
             },
             weight: unsafe {
                 let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(2), 2);
-                BigEndian::read_i16(slice)
+                BigEndian::read_u16(slice)
             },
             port: unsafe {
                 let slice: &[u8] = slice::from_raw_parts(rr.rdata.offset(4), 2);

@@ -7,13 +7,13 @@ use std::str;
 
 fn main() -> Result<(), Box<dyn Error>> {
     static BINDING: &str = "resolv.rs";
-    static HEADER: &str = "/usr/include/resolv.h";
+    let header = format!("{}/resolv.h", std::env::var("GLIBC_INCLUDE").unwrap_or("/usr/include".into()));
     let mut cmd;
     let mut output;
 
-    eprintln!("Generating binding {:?} from {:?} ...\n", BINDING, HEADER);
+    eprintln!("Generating binding {:?} from {:?} ...\n", BINDING, header);
     cmd = Command::new("bindgen");
-    cmd.args(["--with-derive-default", HEADER]);
+    cmd.args(["--with-derive-default", &header]);
     output = cmd.output()?;
     if !output.status.success() {
         let msg = str::from_utf8(output.stderr.as_slice())?;
