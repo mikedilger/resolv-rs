@@ -35,6 +35,14 @@ fn main() {
 }
 ````
 
+## Building
+
+You need to have bindgen version at least 0.62 installed, for example:
+
+```
+cargo install bindgen-cli
+```
+
 ## Limitations
 
 You cannot specify a DNS server separate from editing `/etc/resolv.conf` for the entire
