@@ -95,8 +95,6 @@ pub enum ResolverOption {
     NoTLDQuery = libresolv_sys::RES_NOTLDQUERY,
     /// No automatic configuration reload (since glibc 2.26; invalid in prior versions)
     NoReload = libresolv_sys::RES_NORELOAD,
-    /// Request AD bit, keep it in responses (since glibc 2.31; invalid in prior version)
-    TrustAD = libresolv_sys::RES_TRUSTAD,
     /// Default values
     Default = libresolv_sys::RES_DEFAULT,
 }
