@@ -59,45 +59,7 @@ use std::ops::{Deref, DerefMut};
 
 type Context = libresolv_sys::__res_state;
 
-/// Options for the Resolver
-#[repr(u32)]
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum ResolverOption {
-    /// address initialized
-    Init = libresolv_sys::RES_INIT,
-    /// print debug messages
-    Debug = libresolv_sys::RES_DEBUG,
-    /// use virtual circuit
-    UseVC = libresolv_sys::RES_USEVC,
-    /// ignore truncation errors
-    IgnTc = libresolv_sys::RES_IGNTC,
-    /// recursion desired
-    Recurse = libresolv_sys::RES_RECURSE,
-    /// use default domain name
-    DefNames = libresolv_sys::RES_DEFNAMES,
-    /// Keep TCP socket open
-    StayOpen = libresolv_sys::RES_STAYOPEN,
-    /// search up local domain tree
-    DNSrch = libresolv_sys::RES_DNSRCH,
-    /// shuts off HOSTALIASES feature
-    NoAliases = libresolv_sys::RES_NOALIASES,
-    /// rotate ns list after each query
-    Rotate = libresolv_sys::RES_ROTATE,
-    /// Use EDNS0.
-    UseEDNS0 = libresolv_sys::RES_USE_EDNS0,
-    /// one outstanding request at a time
-    SngLkup = libresolv_sys::RES_SNGLKUP,
-    /// one outstanding request at a time, but open new socket for each request
-    SngLkupReop = libresolv_sys::RES_SNGLKUPREOP,
-    /// use DNSSEC using OK bit in OPT
-    UseDNSSEC = libresolv_sys::RES_USE_DNSSEC,
-    /// Do not look up unqualified name as a TLD.
-    NoTLDQuery = libresolv_sys::RES_NOTLDQUERY,
-    /// No automatic configuration reload (since glibc 2.26; invalid in prior versions)
-    NoReload = libresolv_sys::RES_NORELOAD,
-    /// Default values
-    Default = libresolv_sys::RES_DEFAULT,
-}
+use libresolv_sys::ResolverOption;
 
 pub struct Resolver {
     context: Context,

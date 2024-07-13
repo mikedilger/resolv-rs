@@ -36,3 +36,43 @@ pub use resolv::{
     ns_rr,
     ns_sect,
 };
+
+/// Options for the Resolver
+#[repr(u32)]
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub enum ResolverOption {
+    /// address initialized
+    Init = RES_INIT,
+    /// print debug messages
+    Debug = RES_DEBUG,
+    /// use virtual circuit
+    UseVC = RES_USEVC,
+    /// ignore truncation errors
+    IgnTc = RES_IGNTC,
+    /// recursion desired
+    Recurse = RES_RECURSE,
+    /// use default domain name
+    DefNames = RES_DEFNAMES,
+    /// Keep TCP socket open
+    StayOpen = RES_STAYOPEN,
+    /// search up local domain tree
+    DNSrch = RES_DNSRCH,
+    /// shuts off HOSTALIASES feature
+    NoAliases = RES_NOALIASES,
+    /// rotate ns list after each query
+    Rotate = RES_ROTATE,
+    /// Use EDNS0.
+    UseEDNS0 = RES_USE_EDNS0,
+    /// one outstanding request at a time
+    SngLkup = RES_SNGLKUP,
+    /// one outstanding request at a time, but open new socket for each request
+    SngLkupReop = RES_SNGLKUPREOP,
+    /// use DNSSEC using OK bit in OPT
+    UseDNSSEC = RES_USE_DNSSEC,
+    /// Do not look up unqualified name as a TLD.
+    NoTLDQuery = RES_NOTLDQUERY,
+    /// No automatic configuration reload (since glibc 2.26; invalid in prior versions)
+    NoReload = RES_NORELOAD,
+    /// Default values
+    Default = RES_DEFAULT,
+}
