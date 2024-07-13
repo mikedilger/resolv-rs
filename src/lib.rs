@@ -59,7 +59,7 @@ use std::ops::{Deref, DerefMut};
 
 type Context = libresolv_sys::__res_state;
 
-use libresolv_sys::ResolverOption;
+pub use libresolv_sys::ResolverOption;
 
 pub struct Resolver {
     context: Context,
